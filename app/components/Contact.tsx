@@ -38,7 +38,7 @@ export default function Contact() {
     }
     if (!formData.subject.trim()) tempErrors.subject = "Subject is required.";
     if (!formData.message.trim()) tempErrors.message = "Message is required.";
-    
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -52,7 +52,7 @@ export default function Contact() {
     // Mock API call delay
     setTimeout(() => {
       setStatus("success");
-      
+
       // Trigger canvas-confetti
       confetti({
         particleCount: 120,
@@ -74,7 +74,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 bg-muted-bg/30 relative">
       <div className="max-w-7xl mx-auto px-6 font-sans">
-        
+
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-xs font-bold tracking-widest text-primary-sf dark:text-primary-ai uppercase mb-3">
@@ -87,7 +87,7 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto">
-          
+
           {/* Left Info Panel (Bento Style) */}
           <div className="lg:col-span-5 space-y-8 flex flex-col justify-between">
             <div className="space-y-6">
@@ -103,11 +103,11 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-[10px] font-bold uppercase text-muted-text tracking-wider">Email Address</h4>
-                    <a 
-                      href="mailto:sumitkrgupta05@gmail.com" 
+                    <a
+                      href="mailto:skgsumit5@gmail.com"
                       className="text-sm font-semibold hover:text-primary-sf dark:hover:text-primary-ai transition-colors"
                     >
-                      sumitkrgupta05@gmail.com
+                      skgsumit5@gmail.com
                     </a>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-[10px] font-bold uppercase text-muted-text tracking-wider">Location</h4>
-                    <p className="text-sm font-semibold text-foreground/80">Bengaluru, India</p>
+                    <p className="text-sm font-semibold text-foreground/80">Jharkhand, India</p>
                   </div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function Contact() {
             {/* Social icons with micro animations */}
             <div className="flex items-center gap-3 pt-6 border-t border-card-border/50">
               <a
-                href="https://linkedin.com/in/sumit-kr-gupta"
+                href="https://www.linkedin.com/in/sumitkrgupta05"
                 target="_blank"
                 rel="noreferrer"
                 className="group p-3 rounded-xl bg-card-bg border border-card-border text-foreground/80 hover:text-primary-sf dark:hover:text-primary-ai hover:border-primary-sf dark:hover:border-primary-ai transition-all shadow-sm cursor-pointer"
@@ -172,7 +172,7 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  
+
                   {/* Name and Email side-by-side */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Name */}
@@ -186,11 +186,10 @@ export default function Contact() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className={`w-full bg-muted-bg/40 border ${
-                          errors.name 
-                            ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" 
-                            : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
-                        } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
+                        className={`w-full bg-muted-bg/40 border ${errors.name
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                          : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
+                          } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
                         placeholder="John Doe"
                       />
                       {errors.name && <p className="text-[11px] text-red-600 dark:text-red-400 font-semibold">{errors.name}</p>}
@@ -207,11 +206,10 @@ export default function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className={`w-full bg-muted-bg/40 border ${
-                          errors.email 
-                            ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" 
-                            : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
-                        } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
+                        className={`w-full bg-muted-bg/40 border ${errors.email
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                          : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
+                          } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
                         placeholder="john@example.com"
                       />
                       {errors.email && <p className="text-[11px] text-red-600 dark:text-red-400 font-semibold">{errors.email}</p>}
@@ -229,11 +227,10 @@ export default function Contact() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      className={`w-full bg-muted-bg/40 border ${
-                        errors.subject 
-                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" 
-                          : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
-                      } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
+                      className={`w-full bg-muted-bg/40 border ${errors.subject
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                        : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
+                        } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground`}
                       placeholder="Project Opportunity / Connection"
                     />
                     {errors.subject && <p className="text-[11px] text-red-600 dark:text-red-400 font-semibold">{errors.subject}</p>}
@@ -250,11 +247,10 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
-                      className={`w-full bg-muted-bg/40 border ${
-                        errors.message 
-                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" 
-                          : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
-                      } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground resize-none`}
+                      className={`w-full bg-muted-bg/40 border ${errors.message
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                        : "border-card-border focus:border-primary-sf dark:focus:border-primary-ai focus:ring-primary-sf/10"
+                        } rounded-xl px-4 py-3.5 text-sm outline-none transition-all focus:ring-3 text-foreground resize-none`}
                       placeholder="Hi Sumit, I would love to connect..."
                     />
                     {errors.message && <p className="text-[11px] text-red-600 dark:text-red-400 font-semibold">{errors.message}</p>}

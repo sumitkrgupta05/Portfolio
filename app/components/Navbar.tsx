@@ -27,8 +27,10 @@ export default function Navbar() {
   // Monitor scroll for header background modification and active links
   useEffect(() => {
     type LocoScrollInstance = {
-      on: (event: string, callback: (args: { scroll: { y: number } }) => void) => void;
-      off: (event: string, callback: (args: { scroll: { y: number } }) => void) => void;
+      lenisInstance?: {
+        on: (event: string, callback: (args: { scroll: number }) => void) => void;
+        off: (event: string, callback: (args: { scroll: number }) => void) => void;
+      } | null;
     };
     
     let locoScrollInstance = (window as unknown as { locoScroll?: LocoScrollInstance }).locoScroll;
@@ -50,8 +52,8 @@ export default function Navbar() {
       }
     };
 
-    const handleLocoScroll = (args: { scroll: { y: number } }) => {
-      updateScrollMetrics(args.scroll.y);
+    const handleLocoScroll = (args: { scroll: number }) => {
+      updateScrollMetrics(args.scroll);
     };
 
     const handleNativeScroll = () => {
@@ -59,8 +61,9 @@ export default function Navbar() {
     };
 
     // If Locomotive Scroll is already ready, use it immediately
-    if (locoScrollInstance) {
-      locoScrollInstance.on("scroll", handleLocoScroll);
+    const initialLenis = locoScrollInstance?.lenisInstance;
+    if (initialLenis) {
+      initialLenis.on("scroll", handleLocoScroll);
     } else {
       // Fallback to native window scroll
       window.addEventListener("scroll", handleNativeScroll);
@@ -68,9 +71,10 @@ export default function Navbar() {
       // Setup a periodic check to transition to Locomotive scroll once it mounts
       const interval = setInterval(() => {
         const currentLoco = (window as unknown as { locoScroll?: LocoScrollInstance }).locoScroll;
-        if (currentLoco) {
+        const currentLenis = currentLoco?.lenisInstance;
+        if (currentLoco && currentLenis) {
           locoScrollInstance = currentLoco;
-          locoScrollInstance.on("scroll", handleLocoScroll);
+          currentLenis.on("scroll", handleLocoScroll);
           window.removeEventListener("scroll", handleNativeScroll);
           clearInterval(interval);
         }
@@ -79,15 +83,17 @@ export default function Navbar() {
       return () => {
         window.removeEventListener("scroll", handleNativeScroll);
         clearInterval(interval);
-        if (locoScrollInstance) {
-          locoScrollInstance.off("scroll", handleLocoScroll);
+        const activeLenis = locoScrollInstance?.lenisInstance;
+        if (activeLenis) {
+          activeLenis.off("scroll", handleLocoScroll);
         }
       };
     }
 
     return () => {
-      if (locoScrollInstance) {
-        locoScrollInstance.off("scroll", handleLocoScroll);
+      const activeLenis = locoScrollInstance?.lenisInstance;
+      if (activeLenis) {
+        activeLenis.off("scroll", handleLocoScroll);
       }
     };
   }, []);
@@ -125,7 +131,7 @@ export default function Navbar() {
     setIsOpen(false);
     const target = document.querySelector(href);
     if (target) {
-      const locoScroll = (window as unknown as { locoScroll?: { scrollTo: (target: string | HTMLElement | number, options?: { offset: number }) => void } }).locoScroll;
+      const locoScroll = (window as unknown as { locoScroll?: { scrollTo: (target: string | Element | number, options?: { offset: number }) => void } }).locoScroll;
       if (locoScroll) {
         locoScroll.scrollTo(target, { offset: -70 });
       } else {

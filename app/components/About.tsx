@@ -34,7 +34,7 @@ export default function About() {
   return (
     <section id="about" className="py-24 bg-muted-bg/30 relative">
       <div className="max-w-7xl mx-auto px-6 font-sans">
-        
+
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-xs font-bold tracking-widest text-primary-sf dark:text-primary-ai uppercase mb-3">
@@ -48,7 +48,7 @@ export default function About() {
 
         {/* Bento Grid */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[220px]">
-          
+
           {/* Card 1: Main Bio & Tech Nexus */}
           <div className="about-tile bento-card col-span-1 md:col-span-2 row-span-2 flex flex-col justify-between p-8">
             <div className="space-y-4">
@@ -66,7 +66,7 @@ export default function About() {
                 Leveraging Salesforce Data Cloud, I unify structured and unstructured medical telemetry to create a complete Patient 360 profile. I construct secure Agentforce actions and copilot integrations, enforcing strict validation rules and compliance guardrails to safely automate appointment bookings, patient communications, and clinical task flows.
               </p>
             </div>
-            
+
             <div className="border-t border-card-border/50 pt-4 flex items-center justify-between text-xs font-semibold text-muted-text">
               <span>Apex • LWC • Data Cloud DMOs • Agentforce Actions</span>
               <span className="flex items-center gap-1.5 text-primary-sf dark:text-primary-ai">
@@ -94,11 +94,11 @@ export default function About() {
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase size={14} className="text-muted-text/80" />
-                <span>Health & Data Cloud Specialist</span>
+                <span>Salesforce & Agentforce Specialist</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin size={14} className="text-muted-text/80" />
-                <span>Bengaluru, India (Hybrid)</span>
+                <span>Jharkhand, India</span>
               </div>
             </div>
 
@@ -119,15 +119,8 @@ export default function About() {
               <div className="flex items-start gap-2">
                 <span className="font-bold text-primary-sf dark:text-primary-ai">2025</span>
                 <div>
-                  <p className="font-bold">Cognizant / Tech Mahindra</p>
-                  <p className="text-[10px] text-muted-text">Associate Software Engineer (Health Cloud & AI)</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="font-bold text-muted-text">2024</span>
-                <div>
-                  <p className="font-bold text-foreground/80">Cloud Consultancies</p>
-                  <p className="text-[10px] text-muted-text">Salesforce Integration Specialist</p>
+                  <p className="font-bold">Teqfocus Consulting LLC</p>
+                  <p className="text-[10px] text-muted-text">Associate Software Engineer (Salesforce)</p>
                 </div>
               </div>
             </div>

@@ -181,7 +181,7 @@ export default function Hero() {
   const handleScrollToProjects = () => {
     const target = document.querySelector("#projects");
     if (target) {
-      const locoScroll = (window as unknown as { locoScroll: { scrollTo: (target: string | HTMLElement | number, options?: { offset: number }) => void } }).locoScroll;
+      const locoScroll = (window as unknown as { locoScroll: { scrollTo: (target: string | Element | number, options?: { offset: number }) => void } }).locoScroll;
       if (locoScroll) {
         locoScroll.scrollTo(target, { offset: -70 });
       } else {
@@ -196,7 +196,7 @@ export default function Hero() {
   const handleScrollToContact = () => {
     const target = document.querySelector("#contact");
     if (target) {
-      const locoScroll = (window as unknown as { locoScroll: { scrollTo: (target: string | HTMLElement | number, options?: { offset: number }) => void } }).locoScroll;
+      const locoScroll = (window as unknown as { locoScroll: { scrollTo: (target: string | Element | number, options?: { offset: number }) => void } }).locoScroll;
       if (locoScroll) {
         locoScroll.scrollTo(target, { offset: -70 });
       } else {
@@ -217,7 +217,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(128,128,128,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(128,128,128,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
       <div ref={heroRef} className="max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 w-full">
-        
+
         {/* Left Column: Information Panel */}
         <div className="lg:col-span-7 space-y-6 flex flex-col justify-center">
           <div className="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full border border-card-border bg-muted-bg text-xs font-bold text-primary-sf dark:text-primary-ai shadow-sm w-fit">
@@ -274,9 +274,9 @@ export default function Hero() {
           {/* Action tags */}
           <div className="animate-fade-in flex flex-wrap gap-2 pt-2">
             {[
-              { name: "Salesforce Health Cloud", icon: HeartPulse, color: "text-red-500" },
+              { name: "Agentforce", icon: Zap, color: "text-yellow-500" },
               { name: "Salesforce Data Cloud", icon: Layers, color: "text-blue-500" },
-              { name: "Agentforce Copilots", icon: Zap, color: "text-yellow-500" }
+              { name: "Salesforce Health Cloud", icon: HeartPulse, color: "text-red-500" }
             ].map((tag, i) => {
               const TagIcon = tag.icon;
               return (
@@ -407,7 +407,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
         </div>
-        
+
       </div>
     </section>
   );
