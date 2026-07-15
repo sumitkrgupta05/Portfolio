@@ -405,14 +405,14 @@ export default function Skills() {
             </div>
 
             {/* Compact Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 content-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
               {currentCategory.skills.map((skill, idx) => (
                 <motion.div
                   key={idx}
                   onClick={() => setSelectedSkill(skill)}
                   whileHover={{ y: -3 }}
                   transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                  className={`group relative overflow-hidden bg-zinc-950 border border-zinc-900 rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[105px] select-none ${currentCategory.glowClass}`}
+                  className={`group relative overflow-hidden bg-zinc-950 border border-zinc-900 rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[115px] select-none ${currentCategory.glowClass}`}
                 >
                   {/* Subtle hover background radial glow */}
                   <div className={`absolute -right-10 -bottom-10 w-24 h-24 rounded-full bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-xl ${currentCategory.bgGlowClass}`} />
@@ -429,7 +429,7 @@ export default function Skills() {
 
                   {/* Card Body */}
                   <div className="space-y-1.5 mt-2">
-                    <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-1">
+                    <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-tight">
                       {skill.title}
                     </h4>
                     <p className="text-[10px] text-zinc-500 font-mono">
