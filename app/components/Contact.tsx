@@ -15,6 +15,7 @@ export default function Contact() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [submitError, setSubmitError] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -48,6 +49,7 @@ export default function Contact() {
     if (!validate()) return;
 
     setStatus("sending");
+    setSubmitError("");
 
     try {
       const response = await fetch("/api/send", {
@@ -83,6 +85,7 @@ export default function Contact() {
       });
     } catch (err: unknown) {
       console.error("Mail submit exception:", err);
+      setSubmitError(err instanceof Error ? err.message : "An unexpected error occurred.");
       setStatus("error");
     }
   };
@@ -285,12 +288,19 @@ export default function Contact() {
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="p-4 rounded-xl border border-red-500/25 bg-red-500/10 text-red-600 dark:text-red-400 text-xs leading-relaxed font-bold"
+                      className="p-4 rounded-xl border border-red-500/25 bg-red-500/10 text-red-600 dark:text-red-400 text-xs leading-relaxed font-bold flex flex-col gap-1.5"
                     >
-                      An error occurred while sending your message. Please check your network, ensure the API service is configured, or email me directly at{" "}
-                      <a href="mailto:skgsumit5@gmail.com" className="underline hover:opacity-85">
-                        skgsumit5@gmail.com
-                      </a>.
+                      <span>
+                        An error occurred while sending your message. Please check your network, ensure the API service is configured, or email me directly at{" "}
+                        <a href="mailto:skgsumit5@gmail.com" className="underline hover:opacity-85">
+                          skgsumit5@gmail.com
+                        </a>.
+                      </span>
+                      {submitError && (
+                        <span className="text-[10px] opacity-80 font-mono border-t border-red-500/10 pt-1">
+                          Reason: {submitError}
+                        </span>
+                      )}
                     </motion.div>
                   )}
 
