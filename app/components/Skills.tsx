@@ -436,7 +436,7 @@ export default function Skills() {
           </div>
 
           {/* RIGHT COLUMN: Grid of interactive cards */}
-          <div className="flex-1 flex flex-col justify-between overflow-y-auto lg:overflow-y-visible">
+          <div className="flex-1 flex flex-col justify-between overflow-y-auto pr-1.5 dashboard-scrollbar">
             
             {/* Header info for mobile/tablet */}
             <div className="mb-4 lg:hidden px-1">
@@ -445,49 +445,75 @@ export default function Skills() {
               </p>
             </div>
 
-            {/* Compact Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
-              {currentCategory.skills.map((skill, idx) => (
+            {/* Compact Cards Grid with switch animation */}
+            <div className="flex-grow">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={idx}
-                  onClick={() => setSelectedSkill(skill)}
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                  className={`group relative overflow-hidden bg-zinc-950 border border-zinc-900 rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[115px] select-none ${currentCategory.glowClass}`}
+                  key={activeCategory}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.18, ease: "easeInOut" }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 content-start"
                 >
-                  {/* Subtle hover background radial glow */}
-                  <div className={`absolute -right-10 -bottom-10 w-24 h-24 rounded-full bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-xl ${currentCategory.bgGlowClass}`} />
+                  {currentCategory.skills.map((skill, idx) => (
+                    <motion.div
+                      key={idx}
+                      onClick={() => setSelectedSkill(skill)}
+                      whileHover={{ y: -3 }}
+                      transition={{ type: "spring", stiffness: 350, damping: 20 }}
+                      className={`group relative overflow-hidden bg-zinc-950 border border-zinc-900 rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[108px] select-none ${currentCategory.glowClass}`}
+                    >
+                      {/* Subtle hover background radial glow */}
+                      <div className={`absolute -right-10 -bottom-10 w-24 h-24 rounded-full bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-xl ${currentCategory.bgGlowClass}`} />
 
-                  {/* Card Header */}
-                  <div className="flex items-start justify-between">
-                    <div className={`p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 group-hover:text-white transition-colors duration-300`}>
-                      {skill.icon}
-                    </div>
-                    <span className="text-[9px] font-mono text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
-                      <Info size={10} /> Details
-                    </span>
-                  </div>
+                      {/* Card Header */}
+                      <div className="flex items-start justify-between">
+                        <div className={`p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 group-hover:text-white transition-colors duration-300`}>
+                          {skill.icon}
+                        </div>
+                        <span className="text-[9px] font-mono text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
+                          <Info size={10} /> Details
+                        </span>
+                      </div>
 
-                  {/* Card Body */}
-                  <div className="space-y-1.5 mt-2">
-                    <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-tight">
-                      {skill.title}
-                    </h4>
-                    <p className="text-[10px] text-zinc-500 font-mono">
-                      {skill.subTopics.length} Core Concepts
-                    </p>
-                  </div>
+                      {/* Card Body */}
+                      <div className="space-y-1 mt-1">
+                        <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-tight">
+                          {skill.title}
+                        </h4>
+                        <p className="text-[10px] text-zinc-500 font-mono">
+                          {skill.subTopics.length} Core Concepts
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </motion.div>
-              ))}
+              </AnimatePresence>
             </div>
 
             {/* Quick helper tip footer */}
-            <div className="mt-4 pt-3 border-t border-zinc-900/60 flex items-center justify-between text-[10px] text-zinc-500 font-mono select-none">
+            <div className="mt-4 pt-3 border-t border-zinc-900/60 flex items-center justify-between text-[10px] text-zinc-500 font-mono select-none shrink-0">
               <span>Interactive dashboard</span>
               <span>Click card for detailed logs</span>
             </div>
 
           </div>
+          <style>{`
+            .dashboard-scrollbar::-webkit-scrollbar {
+              width: 4px;
+            }
+            .dashboard-scrollbar::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .dashboard-scrollbar::-webkit-scrollbar-thumb {
+              background: #1f1f22;
+              border-radius: 10px;
+            }
+            .dashboard-scrollbar::-webkit-scrollbar-thumb:hover {
+              background: #2d2d30;
+            }
+          `}</style>
         </div>
 
       </div>
