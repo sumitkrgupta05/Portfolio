@@ -2,18 +2,15 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ShieldCheck,
   Workflow,
   BarChart3,
   Database,
-  Settings2,
   ClipboardCheck,
   Terminal,
   Code2,
   Search,
   Zap,
   Globe,
-  Server,
   Bot,
   Sparkles,
   Sliders,
@@ -23,25 +20,30 @@ import {
   Link2,
   Cloud,
   Key,
-  ArrowUpDown,
-  Share2,
   GitBranch,
   Laptop,
   Wrench,
   GitFork,
-  Binary,
   X,
   Layers,
-  Info
+  Info,
+  Users,
+  UserCheck,
+  FileText,
+  MessageSquare,
+  Play,
+  ShieldAlert,
+  Activity,
+  Brain,
+  Puzzle,
+  CheckSquare
 } from "lucide-react";
 
 type SkillItem = {
   title: string;
   sub: string;
   icon: React.ReactNode;
-  progress: number;
-  years: number;
-  projects: string[];
+  subTopics: string[];
 };
 
 type SkillCategory = {
@@ -53,7 +55,6 @@ type SkillCategory = {
   glowClass: string;
   bgGlowClass: string;
   textColorClass: string;
-  barColorClass: string;
   skills: SkillItem[];
 };
 
@@ -66,182 +67,113 @@ export default function Skills() {
       id: "admin",
       title: "Salesforce Admin",
       icon: <Layers size={18} />,
-      description: "Security architecture, complex Flow logic, and data schema model design.",
+      description: "Managing declarative configuration, platform security, data modeling, and flow orchestration.",
       accentColor: "blue",
       glowClass: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_15px_rgba(37,99,235,0.15)]",
       bgGlowClass: "from-blue-500/10 via-transparent to-transparent",
       textColorClass: "text-blue-400",
-      barColorClass: "from-blue-600 to-blue-400 shadow-[0_0_8px_rgba(37,99,235,0.4)]",
       skills: [
         {
+          title: "User Management",
+          sub: "Deactivation, provisioning & freezes",
+          icon: <Users size={18} />,
+          subTopics: ["User Creation & Deactivation", "Licensing & Feature Assignments", "Freeze / Unfreeze Actions", "Login History & Troubleshooting"]
+        },
+        {
+          title: "Profiles & Permission Sets",
+          sub: "FLS, system permissions & groups",
+          icon: <UserCheck size={18} />,
+          subTopics: ["Object & Field Permissions (FLS)", "System & User Permissions", "Permission Set Groups", "Muted Permissions in Mutex Groups"]
+        },
+        {
           title: "Security & Sharing",
-          sub: "Profiles, Perm Sets, Sharing Rules",
-          icon: <ShieldCheck size={18} />,
-          progress: 95,
-          years: 4,
-          projects: ["Patient Portal Security Audit", "Enterprise Role Hierarchy Overhaul", "Multi-Org Compliance Alignment"]
+          sub: "OWD, roles & sharing rules",
+          icon: <Shield size={18} />,
+          subTopics: ["Org-Wide Defaults (OWD)", "Role Hierarchy", "Sharing Rules (Criteria & Owner based)", "Manual Sharing & Restriction Rules"]
         },
         {
-          title: "Flow Automation",
-          sub: "Record, Screen, & Scheduled Flows",
-          icon: <Workflow size={18} />,
-          progress: 92,
-          years: 4,
-          projects: ["Automated Clinical Care Plan Enroller", "Lead Routing Engine V2", "Einstein Next Best Action Orchestration"]
+          title: "Objects, Fields & Layouts",
+          sub: "Schema modeling & dynamic forms",
+          icon: <FileText size={18} />,
+          subTopics: ["Custom/Standard Objects", "Custom Field Types & Relationships", "Page Layouts & Record Types", "Dynamic Forms & Actions Config"]
         },
         {
-          title: "Analytics Tracking",
-          sub: "Reports, Dashboards, Metrics",
+          title: "Reports & Dashboards",
+          sub: "Matrices, reports & subscriptions",
           icon: <BarChart3 size={18} />,
-          progress: 88,
-          years: 4,
-          projects: ["Executive Telemetry Dashboards", "Agent Performance Metrics Tracking", "Historic Data Trend Reporting"]
+          subTopics: ["Report Types & Formats", "Summary & Matrix Reports", "Dashboard Components", "Dynamic Dashboards & Subscriptions"]
         },
         {
-          title: "Data Stewardship",
-          sub: "Data Loader, Duplicate Management",
-          icon: <Database size={18} />,
-          progress: 90,
-          years: 4,
-          projects: ["10M+ Records Patient Migration", "Duplicate Rules Optimization", "Automated Deduplication Batches"]
+          title: "Flow Builder",
+          sub: "Triggered, screen & scheduled flows",
+          icon: <Workflow size={18} />,
+          subTopics: ["Record-Triggered & Screen Flows", "Scheduled & Autolaunched Flows", "Subflows & Flow Orchestrator", "Collection Processors & Loops"]
         },
         {
-          title: "Schema Modeling",
-          sub: "Custom Objects, Fields, Validations",
-          icon: <Settings2 size={18} />,
-          progress: 94,
-          years: 4,
-          projects: ["Health Cloud Patient EHR Schema", "Custom Referral Intake System", "Complex Validation Engines"]
-        },
-        {
-          title: "Approval Chains",
-          sub: "Multi-step entry & automated approvals",
+          title: "Approval Process",
+          sub: "Entry criteria & approval actions",
           icon: <ClipboardCheck size={18} />,
-          progress: 85,
-          years: 3.5,
-          projects: ["Clinical Expense Approvals System", "Multi-Tier Care Plan Approval", "Discount Pricing Verification"]
+          subTopics: ["Entry Criteria & Initial Submission", "Approval/Rejection Actions", "Multi-step Approvals", "Record Locking & Unlocking"]
+        },
+        {
+          title: "Validation Rule",
+          sub: "Formula logic & error checks",
+          icon: <CheckSquare size={18} />,
+          subTopics: ["Formula Syntax & Logic", "Error Message Placement", "Cross-Object Validations", "Regular Expressions (REGEX)"]
         }
       ]
     },
     {
       id: "development",
-      title: "Development",
+      title: "Salesforce Development",
       icon: <Code2 size={18} />,
-      description: "Object-oriented Apex programming, Async triggers, and reactive UI components.",
+      description: "Building scalable custom modules using Apex, reactive Lightning Web Components, and async processes.",
       accentColor: "indigo",
       glowClass: "group-hover:border-indigo-500/50 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]",
       bgGlowClass: "from-indigo-500/10 via-transparent to-transparent",
       textColorClass: "text-indigo-400",
-      barColorClass: "from-indigo-600 to-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.4)]",
       skills: [
         {
-          title: "Apex Programming",
-          sub: "OOP classes, triggers, and controllers",
-          icon: <Terminal size={18} />,
-          progress: 92,
-          years: 4,
-          projects: ["Bulk Trigger Framework Integration", "Custom API Request Router", "Heavy Financial Calculations Engine"]
-        },
-        {
-          title: "Lightning Components",
-          sub: "Reactive LWC UI modules",
+          title: "LWC (Lightning Web Components)",
+          sub: "Modern reactive web components",
           icon: <Code2 size={18} />,
-          progress: 90,
-          years: 3.5,
-          projects: ["Custom Doctor Scheduling Calendar", "Dynamic Patient Care Checklist LWC", "Aura to LWC Migration"]
+          subTopics: ["Javascript ES6+ & Reactive Properties", "HTML Templates & CSS Styling", "Component Lifecycle Hooks", "PubSub & Lightning Message Service Integration"]
         },
         {
-          title: "SOQL & SOSL Querying",
-          sub: "Indexed queries, performance search",
-          icon: <Search size={18} />,
-          progress: 95,
-          years: 4,
-          projects: ["Custom Search UI Component", "Query Plan Optimization (Large Data)", "Bulk Data Extraction Queries"]
+          title: "Apex",
+          sub: "OOP classes, controllers & testing",
+          icon: <Terminal size={18} />,
+          subTopics: ["Object-Oriented Coding (OOP)", "Classes, Interfaces, & Enums", "SOQL & SOSL DML Operations", "Apex Testing & Mocking Frameworks"]
         },
         {
-          title: "Async Processing",
-          sub: "Batch, Queueable, future calls",
+          title: "Apex Trigger",
+          sub: "Bulk trigger handler patterns",
           icon: <Zap size={18} />,
-          progress: 88,
-          years: 4,
-          projects: ["Nightly Patient EHR Sync Batch", "Queueable External API Callouts", "Scheduled Sync Logs Purging"]
+          subTopics: ["Trigger Events (Before/After)", "Trigger Handlers Pattern", "Context Variables (Trigger.new/old)", "Bulkification Best Practices"]
         },
         {
-          title: "JavaScript & React",
-          sub: "Modern frontend frameworks",
-          icon: <Globe size={18} />,
-          progress: 85,
-          years: 4,
-          projects: ["Custom Developer Portfolio Site", "Interactive LWC Javascript Plugins", "Next.js Static Dashboards"]
+          title: "SOQL",
+          sub: "Relational queries & optimizations",
+          icon: <Search size={18} />,
+          subTopics: ["SELECT, WHERE, ORDER BY clauses", "Parent-to-Child & Child-to-Parent queries", "Aggregate Functions & GROUP BY", "Query Optimizer & Performance Indexing"]
         },
         {
-          title: "Node.js & Backend",
-          sub: "Form submissions & REST routes",
-          icon: <Server size={18} />,
-          progress: 80,
-          years: 3,
-          projects: ["Portfolio Contact Handler Route", "Microservice for PDF Generation", "Secure Token Exchange App"]
-        }
-      ]
-    },
-    {
-      id: "agentforce",
-      title: "Agentforce & AI",
-      icon: <Bot size={18} />,
-      description: "Intelligent conversational agents, prompt grounding, and AI trust layers.",
-      accentColor: "teal",
-      glowClass: "group-hover:border-teal-500/50 group-hover:shadow-[0_0_15px_rgba(20,184,166,0.15)]",
-      bgGlowClass: "from-teal-500/10 via-transparent to-transparent",
-      textColorClass: "text-teal-400",
-      barColorClass: "from-teal-600 to-teal-400 shadow-[0_0_8px_rgba(20,184,166,0.4)]",
-      skills: [
-        {
-          title: "Agentforce Config",
-          sub: "Autonomous multi-agent bots",
-          icon: <Bot size={18} />,
-          progress: 88,
-          years: 1,
-          projects: ["Autonomous Doctor Care Coordinator Agent", "Patient Ingestion Assistant", "Customer Support Intelligent Routing"]
+          title: "LDS (Lightning Data Service)",
+          sub: "Wire adapters & client-side caching",
+          icon: <Layers size={18} />,
+          subTopics: ["lightning-record-form", "lightning-record-view-form & edit-form", "wire adapters (getRecord, updateRecord)", "Client-Side Caching & Cache Invalidation"]
         },
         {
-          title: "Prompt Builder",
-          sub: "Grounded prompt templates",
-          icon: <Sparkles size={18} />,
-          progress: 90,
-          years: 1,
-          projects: ["Einstein Grounded Patient Summary", "Automated Case Classification Prompts", "Secure Email Draft Generator"]
+          title: "LMS (Lightning Message Service)",
+          sub: "Cross-component communication",
+          icon: <MessageSquare size={18} />,
+          subTopics: ["Message Channels XML definition", "Publish & Subscribe controllers", "Communication across LWC, Aura, & Visualforce", "Scope settings (Active Area vs Application)"]
         },
         {
-          title: "Prompt Testing & Tuning",
-          sub: "Validating responses & token sizes",
-          icon: <Sliders size={18} />,
-          progress: 85,
-          years: 1,
-          projects: ["Hallucination Reduction Analysis", "Token Optimization Audit", "Cross-model Quality Evaluations"]
-        },
-        {
-          title: "Einstein Trust Layer",
-          sub: "PII masking & toxicity blocking",
-          icon: <Shield size={18} />,
-          progress: 92,
-          years: 1,
-          projects: ["EHR Data PII Masking Setup", "Toxicity Screening Policy Builder", "Secure AI Logging & Auditing"]
-        },
-        {
-          title: "Model Builder",
-          sub: "Custom actions & model inputs",
+          title: "Async Apex",
+          sub: "Batches, queueables & schedules",
           icon: <Cpu size={18} />,
-          progress: 85,
-          years: 1,
-          projects: ["External LLM Action Connectors", "Custom Model Fine-tuning Pipeline", "Predictive Analytics Setup"]
-        },
-        {
-          title: "Agentic Workflows",
-          sub: "Dynamic action routing",
-          icon: <Network size={18} />,
-          progress: 88,
-          years: 1.5,
-          projects: ["Multi-Agent Collaboration Engine", "Complex Action Trigger Pipelines", "Feedback Loops for Conversational Agents"]
+          subTopics: ["Batch Apex (Database.Batchable)", "Queueable Apex (System.Queueable)", "Future Methods (@future)", "Scheduled Apex & Apex Flex Queue"]
         }
       ]
     },
@@ -249,60 +181,95 @@ export default function Skills() {
       id: "integration",
       title: "Integration",
       icon: <Network size={18} />,
-      description: "Real-time telemetry, Data Cloud streams, API orchestration, and connected apps.",
+      description: "Exposing APIs, executing secure callouts, and configuring event-driven systems.",
       accentColor: "emerald",
       glowClass: "group-hover:border-emerald-500/50 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.15)]",
       bgGlowClass: "from-emerald-500/10 via-transparent to-transparent",
       textColorClass: "text-emerald-400",
-      barColorClass: "from-emerald-600 to-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.4)]",
       skills: [
         {
-          title: "API Connections",
-          sub: "REST & SOAP integrations",
+          title: "REST API",
+          sub: "Custom endpoints & web services",
           icon: <Link2 size={18} />,
-          progress: 92,
-          years: 4,
-          projects: ["EHR System REST API Connector", "Payment Gateway LWC Checkout", "External Inventory Status Sync"]
+          subTopics: ["Apex REST Web Services (@RestResource)", "HTTP Methods (GET, POST, PUT, DELETE)", "JSON/XML Parsing & Serialization", "Custom Request/Response Wrappers"]
         },
         {
-          title: "Data Cloud Integration",
-          sub: "Ingestion streams, Patient 360",
-          icon: <Cloud size={18} />,
-          progress: 88,
-          years: 1,
-          projects: ["Patient 360 Ingestion Pipeline", "Real-Time Telemetry Data Stream", "Identity Resolution Setup"]
+          title: "HTTP Callouts",
+          sub: "External integrations & parsing",
+          icon: <Globe size={18} />,
+          subTopics: ["HttpRequest & HttpResponse Classes", "JSON Payloads & Multipart Requests", "Callout Limits & Asynchronous Callouts", "Mocking Callouts for Apex Tests"]
         },
         {
-          title: "Connected Apps & OAuth",
-          sub: "JWT authentication, SSO",
+          title: "Named Credentials",
+          sub: "Enhanced callouts security",
           icon: <Key size={18} />,
-          progress: 90,
-          years: 4,
-          projects: ["Connected Apps JWT Authorization", "Azure AD SSO Config", "API Gateway Client Credentials Auth"]
+          subTopics: ["Legacy & Enhanced Named Credentials", "External Credentials & Principals", "Authentication Protocols (OAuth 2.0, API Keys)", "Secure Headers & Merge Fields"]
         },
         {
-          title: "Webhooks Handler",
-          sub: "Real-time external callbacks",
-          icon: <ArrowUpDown size={18} />,
-          progress: 85,
-          years: 3,
-          projects: ["Real-time Status Alert Webhook", "Slack Event Notifier Webhook", "Webhook Payload Verification Setup"]
+          title: "External Client Apps",
+          sub: "Secure OAuth configurations",
+          icon: <Cloud size={18} />,
+          subTopics: ["OAuth Settings & Policies", "Secure API Access Control", "Metadata Configuration", "Scoped Permissions"]
         },
         {
-          title: "MuleSoft & ETL",
-          sub: "Middleware orchestration",
-          icon: <Share2 size={18} />,
-          progress: 80,
-          years: 3,
-          projects: ["MuleSoft Anypoint Exchange Config", "Large Scale ETL Data Pipelines", "Kafka Ingestion Middleware"]
+          title: "Postman",
+          sub: "API request runner & testing",
+          icon: <Sliders size={18} />,
+          subTopics: ["API Collection Setup", "Environment Variables & Tokens", "Request Verification & Mocking", "Automated Runner Tests"]
         },
         {
-          title: "Event-Driven Architecture",
-          sub: "Platform events, CDC",
+          title: "Platform Events",
+          sub: "Event-driven pub/sub systems",
           icon: <Network size={18} />,
-          progress: 86,
-          years: 3,
-          projects: ["Change Data Capture (CDC) Sync", "Platform Event Care Notification", "EMP Connector External Listeners"]
+          subTopics: ["Event Definition & Custom Fields", "Publishing Events (Apex/Flow/APIs)", "Subscribing (Triggers/Flows/EMP Connector)", "High-volume Replay ID & Retention"]
+        }
+      ]
+    },
+    {
+      id: "agentforce",
+      title: "Agentforce",
+      icon: <Bot size={18} />,
+      description: "Configuring autonomous conversational agents, prompt grounding, and model governance.",
+      accentColor: "teal",
+      glowClass: "group-hover:border-teal-500/50 group-hover:shadow-[0_0_15px_rgba(20,184,166,0.15)]",
+      bgGlowClass: "from-teal-500/10 via-transparent to-transparent",
+      textColorClass: "text-teal-400",
+      skills: [
+        {
+          title: "Agent Builder",
+          sub: "Agent configuration & topic maps",
+          icon: <Bot size={18} />,
+          subTopics: ["Agent Profiles & Topics", "Instruction Design & Grounding", "Session Persistence & Conversations", "User Experience Customizations"]
+        },
+        {
+          title: "Agent Actions",
+          sub: "Invocable methods & custom APIs",
+          icon: <Play size={18} />,
+          subTopics: ["Apex Actions (@InvocableMethod)", "Flow Actions & API Calls", "System Actions & Fallbacks", "Parameter Mapping & Grounding Validation"]
+        },
+        {
+          title: "Prompt Builder",
+          sub: "Grounded prompt generation templates",
+          icon: <Sparkles size={18} />,
+          subTopics: ["Einstein Grounded Templates", "Field Generation Templates", "Flex Templates", "Dynamic XML/HTML Grounding Data"]
+        },
+        {
+          title: "Agent Orchestration",
+          sub: "Multi-agent context handovers",
+          icon: <GitFork size={18} />,
+          subTopics: ["Multi-Agent Collaboration", "Topic Routing & Context Handovers", "Pre/Post-execution Guardrails", "Adaptive Conversation Flows"]
+        },
+        {
+          title: "Einstein Trust Layer",
+          sub: "Secure de-identification & toxicity checks",
+          icon: <ShieldAlert size={18} />,
+          subTopics: ["PII Masking & Data De-identification", "Toxicity Detection & Scoring", "Secure LLM Gateway Config", "Compliance & Audit Trail Logs"]
+        },
+        {
+          title: "Testing, Monitoring & Governance",
+          sub: "Quality metrics & token logs",
+          icon: <Activity size={18} />,
+          subTopics: ["Response Quality Evaluations", "Hallucination Testing Frameworks", "Token Usage & Cost Control", "User Intent Monitoring & Feedback Logs"]
         }
       ]
     },
@@ -310,60 +277,47 @@ export default function Skills() {
       id: "tools",
       title: "Tool & AI",
       icon: <Laptop size={18} />,
-      description: "CI/CD automation, DX environments, and local AI-powered developer workflows.",
+      description: "DevOps automation, environment setups, and local AI agent productivity.",
       accentColor: "violet",
       glowClass: "group-hover:border-violet-500/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]",
       bgGlowClass: "from-violet-500/10 via-transparent to-transparent",
       textColorClass: "text-violet-400",
-      barColorClass: "from-violet-600 to-violet-400 shadow-[0_0_8px_rgba(139,92,246,0.4)]",
       skills: [
         {
-          title: "CI/CD & Git",
-          sub: "GitHub Actions release flows",
+          title: "Git & GitHub",
+          sub: "Branching workflows & CI/CD Actions",
           icon: <GitBranch size={18} />,
-          progress: 90,
-          years: 4,
-          projects: ["GitHub Actions Release Workflow", "Branch Protection Controls Config", "Automated PMD Code Scanner"]
+          subTopics: ["Branching & Pull Request Workflows", "Conflict Resolution", "GitHub Actions CI/CD Pipelines", "Pre-commit Hooks & Linter Checkers"]
         },
         {
-          title: "Salesforce DX (SFDX)",
-          sub: "Scratch orgs & package builds",
-          icon: <GitFork size={18} />,
-          progress: 92,
-          years: 4,
-          projects: ["Package-Based Development Pipelines", "Scratch Org Provisioning Scripts", "Automated Org Deploy CLI Tools"]
-        },
-        {
-          title: "Cursor & AI Tools",
-          sub: "Cursor coding, Claude LLMs",
-          icon: <Binary size={18} />,
-          progress: 95,
-          years: 2,
-          projects: ["Cursor Workspace Agent Workflows", "Claude Custom API Pipelines", "AI-Driven Unit Test Generation"]
-        },
-        {
-          title: "VS Code Suite",
-          sub: "Apex debuggers & tooling",
-          icon: <Laptop size={18} />,
-          progress: 92,
-          years: 4,
-          projects: ["VS Code Workspace Configs", "Apex Replay Debugger Setup", "Custom LWC Snippet Extensions"]
-        },
-        {
-          title: "RAG & Vector Search",
-          sub: "RAG groundings & prompt sync",
-          icon: <Wrench size={18} />,
-          progress: 88,
-          years: 1,
-          projects: ["Custom RAG Grounded System", "Einstein Vector Database Config", "Semantic Search Integration"]
-        },
-        {
-          title: "Local Tooling",
-          sub: "Scripting, PNPM, Node, Bundles",
+          title: "Salesforce Cli (SFDX)",
+          sub: "Scratch orgs & deploy scripting",
           icon: <Terminal size={18} />,
-          progress: 86,
-          years: 4,
-          projects: ["Next.js App Build Optimizations", "PNPM Workspace Monorepo", "Custom CLI Productivity Tools"]
+          subTopics: ["CLI Commands (project:deploy, org:create)", "Scratch Org Provisioning", "Package-Based Releases (Unlocked Packages)", "Auth login & SFDX Configuration"]
+        },
+        {
+          title: "Data Loader",
+          sub: "Bulk data insertion & script runs",
+          icon: <Database size={18} />,
+          subTopics: ["Bulk Data Operations (Insert, Update, Upsert, Delete)", "Mapping Files (.sdl)", "Command-Line CLI Data Loader", "Error Handling & Success Logs Parsing"]
+        },
+        {
+          title: "AI Agent",
+          sub: "Agentic workspaces & IDE helpers",
+          icon: <Brain size={18} />,
+          subTopics: ["Agentic Frameworks", "Autonomous Loop Iteration", "Context Memory Management", "System Prompts Optimization"]
+        },
+        {
+          title: "MCP",
+          sub: "Model Context Protocol tools & servers",
+          icon: <Puzzle size={18} />,
+          subTopics: ["Model Context Protocol standards", "Custom Server Configurations", "Tool Schema Specifications", "Context Syncing & Resource Handlers"]
+        },
+        {
+          title: "RAG",
+          sub: "Vector databases & query grounding",
+          icon: <Wrench size={18} />,
+          subTopics: ["Retrieval-Augmented Generation", "Vector Database Ingestion", "Embedding Model Integration", "Semantic & Hybrid Search Queries"]
         }
       ]
     }
@@ -440,7 +394,7 @@ export default function Skills() {
             })}
           </div>
 
-          {/* RIGHT COLUMN: Grid of 6 interactive cards */}
+          {/* RIGHT COLUMN: Grid of interactive cards */}
           <div className="flex-1 flex flex-col justify-between overflow-y-auto lg:overflow-y-visible">
             
             {/* Header info for mobile/tablet */}
@@ -451,11 +405,10 @@ export default function Skills() {
             </div>
 
             {/* Compact Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 content-start">
               {currentCategory.skills.map((skill, idx) => (
                 <motion.div
                   key={idx}
-                  layoutId={`skill-card-${currentCategory.id}-${idx}`}
                   onClick={() => setSelectedSkill(skill)}
                   whileHover={{ y: -3 }}
                   transition={{ type: "spring", stiffness: 350, damping: 20 }}
@@ -475,20 +428,13 @@ export default function Skills() {
                   </div>
 
                   {/* Card Body */}
-                  <div className="space-y-1 mt-2">
+                  <div className="space-y-1.5 mt-2">
                     <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-1">
                       {skill.title}
                     </h4>
-                    
-                    {/* Compact glowing progress bar */}
-                    <div className="w-full bg-zinc-900 rounded-full h-1 overflow-hidden mt-1 border border-zinc-800/40">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.progress}%` }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className={`h-full rounded-full bg-gradient-to-r ${currentCategory.barColorClass}`}
-                      />
-                    </div>
+                    <p className="text-[10px] text-zinc-500 font-mono">
+                      {skill.subTopics.length} Core Concepts
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -497,7 +443,7 @@ export default function Skills() {
             {/* Quick helper tip footer */}
             <div className="mt-4 pt-3 border-t border-zinc-900/60 flex items-center justify-between text-[10px] text-zinc-500 font-mono select-none">
               <span>Interactive dashboard</span>
-              <span>Click card for logs & projects</span>
+              <span>Click card for detailed logs</span>
             </div>
 
           </div>
@@ -564,55 +510,30 @@ export default function Skills() {
                   </p>
                 </div>
 
-                {/* Skill Metrics (Grid of 2 items: Progress & Experience) */}
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Progress Indicator */}
-                  <div className="bg-zinc-900/50 border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Expertise</span>
-                    <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-2xl font-black text-white">{selectedSkill.progress}</span>
-                      <span className="text-[10px] font-bold text-zinc-500">%</span>
-                    </div>
-                    {/* Small progress line */}
-                    <div className="w-full bg-zinc-950 rounded-full h-1 overflow-hidden mt-3 border border-zinc-800/40">
-                      <div
-                        className={`h-full rounded-full bg-gradient-to-r ${currentCategory.barColorClass}`}
-                        style={{ width: `${selectedSkill.progress}%` }}
-                      />
+                {/* Sub-topics section */}
+                {selectedSkill.subTopics && (
+                  <div className="space-y-3.5">
+                    <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
+                      Core Sub-Topics
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2">
+                      {selectedSkill.subTopics.map((topic, tIdx) => (
+                        <div key={tIdx} className="flex items-center gap-3 bg-zinc-900/60 border border-zinc-800/50 px-4 py-3 rounded-xl hover:border-zinc-700 transition-colors">
+                          <span className={`text-[10px] font-mono shrink-0 ${
+                            activeCategory === "admin" ? "text-blue-400"
+                              : activeCategory === "development" ? "text-indigo-400"
+                              : activeCategory === "agentforce" ? "text-teal-400"
+                              : activeCategory === "integration" ? "text-emerald-400"
+                              : "text-violet-400"
+                          }`}>
+                            $
+                          </span>
+                          <span className="text-xs text-zinc-200 font-semibold">{topic}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-
-                  {/* Experience */}
-                  <div className="bg-zinc-900/50 border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Experience</span>
-                    <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-2xl font-black text-white">{selectedSkill.years}</span>
-                      <span className="text-[10px] font-bold text-zinc-500">Years</span>
-                    </div>
-                    <span className="text-[9px] text-zinc-500 mt-3 font-mono leading-none">Active integration</span>
-                  </div>
-                </div>
-
-                {/* Projects Used In */}
-                <div className="space-y-2.5">
-                  <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
-                    Project Deployments
-                  </h4>
-                  <ul className="space-y-2">
-                    {selectedSkill.projects.map((proj, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-3 text-xs text-zinc-300 font-normal leading-relaxed">
-                        <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
-                          activeCategory === "admin" ? "bg-blue-500"
-                            : activeCategory === "development" ? "bg-indigo-500"
-                            : activeCategory === "agentforce" ? "bg-teal-500"
-                            : activeCategory === "integration" ? "bg-emerald-500"
-                            : "bg-violet-500"
-                        }`} />
-                        <span>{proj}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                )}
 
               </div>
 
