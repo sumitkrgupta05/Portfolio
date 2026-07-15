@@ -36,7 +36,10 @@ import {
   Activity,
   Brain,
   Puzzle,
-  CheckSquare
+  CheckSquare,
+  TrendingUp,
+  LifeBuoy,
+  Heart
 } from "lucide-react";
 
 type SkillItem = {
@@ -320,6 +323,42 @@ export default function Skills() {
           subTopics: ["Retrieval-Augmented Generation", "Vector Database Ingestion", "Embedding Model Integration", "Semantic & Hybrid Search Queries"]
         }
       ]
+    },
+    {
+      id: "clouds",
+      title: "Salesforce Cloud",
+      icon: <Cloud size={18} />,
+      description: "Architecting and configuring specialized CRM platforms, patient care models, and unified customer data profiles.",
+      accentColor: "sky",
+      glowClass: "group-hover:border-sky-500/50 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.15)]",
+      bgGlowClass: "from-sky-500/10 via-transparent to-transparent",
+      textColorClass: "text-sky-400",
+      skills: [
+        {
+          title: "Sales Cloud",
+          sub: "Sales CRM configuration & automation",
+          icon: <TrendingUp size={18} />,
+          subTopics: ["Lead & Opportunity Management", "Campaigns & Forecasting", "Accounts & Contacts Sync", "Sales Stages & Quotes"]
+        },
+        {
+          title: "Service Cloud",
+          sub: "Customer service workflows & channels",
+          icon: <LifeBuoy size={18} />,
+          subTopics: ["Case Management & Routing", "Knowledge Base & Articles", "Omni-Channel Routing", "Entitlements & Service SLA"]
+        },
+        {
+          title: "Data 360",
+          sub: "Real-time data engine & profiles",
+          icon: <Cloud size={18} />,
+          subTopics: ["Data Streams Ingestion", "Identity Resolution & Rules", "Calculated Insights & SQL", "Data Actions & Activation"]
+        },
+        {
+          title: "Health Cloud",
+          sub: "Clinical Patient 360 care systems",
+          icon: <Heart size={18} />,
+          subTopics: ["Patient Care Plans & Goals", "EHR Data Model & Mapping", "Provider Search & Directory", "Patient Portal & Timeline"]
+        }
+      ]
     }
   ];
 
@@ -333,14 +372,16 @@ export default function Skills() {
           : activeCategory === "development" ? "bg-indigo-600"
           : activeCategory === "agentforce" ? "bg-teal-600"
           : activeCategory === "integration" ? "bg-emerald-600"
-          : "bg-violet-600"
+          : activeCategory === "tools" ? "bg-violet-600"
+          : "bg-sky-600"
       }`} />
       <div className={`absolute left-10 bottom-1/4 w-96 h-96 rounded-full blur-3xl opacity-10 pointer-events-none transition-all duration-1000 ${
         activeCategory === "admin" ? "bg-blue-600"
           : activeCategory === "development" ? "bg-indigo-600"
           : activeCategory === "agentforce" ? "bg-teal-600"
           : activeCategory === "integration" ? "bg-emerald-600"
-          : "bg-violet-600"
+          : activeCategory === "tools" ? "bg-violet-600"
+          : "bg-sky-600"
       }`} />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10 font-sans">
@@ -497,7 +538,8 @@ export default function Skills() {
                         : activeCategory === "development" ? "text-indigo-400 border-indigo-500/20 bg-indigo-500/5"
                         : activeCategory === "agentforce" ? "text-teal-400 border-teal-500/20 bg-teal-500/5"
                         : activeCategory === "integration" ? "text-emerald-400 border-emerald-500/20 bg-emerald-500/5"
-                        : "text-violet-400 border-violet-500/20 bg-violet-500/5"
+                        : activeCategory === "tools" ? "text-violet-400 border-violet-500/20 bg-violet-500/5"
+                        : "text-sky-400 border-sky-500/20 bg-sky-500/5"
                     }`}>
                       {currentCategory.title}
                     </span>
@@ -524,7 +566,8 @@ export default function Skills() {
                               : activeCategory === "development" ? "text-indigo-400"
                               : activeCategory === "agentforce" ? "text-teal-400"
                               : activeCategory === "integration" ? "text-emerald-400"
-                              : "text-violet-400"
+                              : activeCategory === "tools" ? "text-violet-400"
+                              : "text-sky-400"
                           }`}>
                             $
                           </span>
