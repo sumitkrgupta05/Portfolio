@@ -398,17 +398,17 @@ export default function Skills() {
         </div>
 
         {/* Dashboard Grid Container - Fixed viewport sizing on desktop */}
-        <div className="w-full max-w-5xl mx-auto bg-zinc-950/40 border border-zinc-900 rounded-3xl backdrop-blur-xl shadow-2xl p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 items-stretch lg:h-[480px]">
+        <div className="w-full max-w-5xl mx-auto bg-zinc-950/40 border border-zinc-900 rounded-3xl backdrop-blur-xl shadow-2xl p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 items-stretch lg:h-[500px]">
           
           {/* LEFT COLUMN: Sidebar Category Tabs */}
-          <div className="w-full lg:w-1/3 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-3 lg:pb-0 scrollbar-none border-b border-zinc-900 lg:border-b-0 lg:border-r lg:pr-6 border-zinc-900 shrink-0">
+          <div className="w-full lg:w-1/3 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto pb-3 lg:pb-0 scrollbar-none border-b border-zinc-900 lg:border-b-0 lg:border-r lg:pr-6 border-zinc-900 shrink-0">
             {categories.map((category) => {
               const isActive = activeCategory === category.id;
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`flex items-center gap-3 w-auto lg:w-full px-4 py-3 rounded-2xl border text-left transition-all duration-300 cursor-pointer whitespace-nowrap lg:whitespace-normal shrink-0 ${
+                  className={`flex items-center gap-3 w-auto lg:w-full px-4 py-2.5 rounded-2xl border text-left transition-all duration-300 cursor-pointer whitespace-nowrap lg:whitespace-normal shrink-0 ${
                     isActive
                       ? "bg-zinc-900 border-zinc-800 text-white shadow-lg"
                       : "bg-transparent border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/30"
@@ -422,10 +422,7 @@ export default function Skills() {
                     {category.icon}
                   </div>
                   <div className="hidden sm:block">
-                    <h3 className="text-xs font-bold tracking-tight">{category.title}</h3>
-                    <p className="text-[9px] text-zinc-500 font-normal leading-tight mt-0.5 max-w-[200px] hidden lg:block">
-                      {category.description}
-                    </p>
+                    <span className="text-xs font-bold tracking-tight">{category.title}</span>
                   </div>
                   <div className="block sm:hidden">
                     <span className="text-xs font-bold">{category.title}</span>
@@ -438,9 +435,20 @@ export default function Skills() {
           {/* RIGHT COLUMN: Grid of interactive cards */}
           <div className="flex-1 flex flex-col justify-between overflow-y-auto pr-1.5 dashboard-scrollbar">
             
-            {/* Header info for mobile/tablet */}
-            <div className="mb-4 lg:hidden px-1">
-              <p className="text-xs text-zinc-400 font-medium">
+            {/* Header info (visible on all screens for details of the active capability) */}
+            <div className="mb-4 px-1 select-none border-b border-zinc-900/60 pb-3 shrink-0">
+              <h3 className="text-xs font-extrabold text-white flex items-center gap-2">
+                <span className={`w-1.5 h-1.5 rounded-full ${
+                  activeCategory === "admin" ? "bg-blue-500"
+                    : activeCategory === "development" ? "bg-indigo-500"
+                    : activeCategory === "agentforce" ? "bg-teal-500"
+                    : activeCategory === "integration" ? "bg-emerald-500"
+                    : activeCategory === "tools" ? "bg-violet-500"
+                    : "bg-sky-500"
+                }`} />
+                {currentCategory.title}
+              </h3>
+              <p className="text-[10px] text-zinc-500 font-normal leading-relaxed mt-1">
                 {currentCategory.description}
               </p>
             </div>
