@@ -11,7 +11,7 @@ import ScrambleText from "./ScrambleText";
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const words = ["Associate Software Engineer", "Salesforce Admin", "Salesforce Developer"];
+  const words = ["Associate Software Engineer", "Salesforce Administrator", "Salesforce Developer", "Agentforce Specialist"];
   const [index, setIndex] = useState(0);
   const [isProfileHovered, setIsProfileHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -275,8 +275,8 @@ export default function Hero() {
           <div className="animate-fade-in flex flex-wrap gap-2 pt-2">
             {[
               { name: "Agentforce", icon: Zap, color: "text-yellow-500" },
-              { name: "Salesforce Data Cloud", icon: Layers, color: "text-blue-500" },
-              { name: "Salesforce Health Cloud", icon: HeartPulse, color: "text-red-500" }
+              { name: "Data 360", icon: Layers, color: "text-blue-500" },
+              { name: "Health Cloud", icon: HeartPulse, color: "text-red-500" }
             ].map((tag, i) => {
               const TagIcon = tag.icon;
               return (
@@ -371,7 +371,7 @@ export default function Hero() {
             <motion.div
               variants={healthCloudVariants}
               initial="hidden"
-              animate={isProfileHovered ? "visible" : "hidden"}
+              animate={isProfileHovered || isMobile ? "visible" : "hidden"}
               className="absolute top-[18%] left-[0%] bg-card-bg/90 border border-card-border/60 shadow-lg px-3 py-1.5 rounded-xl flex items-center gap-1.5 z-0 backdrop-blur-md cursor-pointer hover:scale-105 transition-transform"
             >
               <div className="p-1 rounded bg-red-500/10 text-red-500">
@@ -384,7 +384,7 @@ export default function Hero() {
             <motion.div
               variants={dataCloudVariants}
               initial="hidden"
-              animate={isProfileHovered ? "visible" : "hidden"}
+              animate={isProfileHovered || isMobile ? "visible" : "hidden"}
               className="absolute top-[45%] right-[0%] bg-card-bg/90 border border-card-border/60 shadow-lg px-3 py-1.5 rounded-xl flex items-center gap-1.5 z-0 backdrop-blur-md cursor-pointer hover:scale-105 transition-transform"
             >
               <div className="p-1 rounded bg-blue-500/10 text-blue-500">
@@ -397,7 +397,7 @@ export default function Hero() {
             <motion.div
               variants={agentforceVariants}
               initial="hidden"
-              animate={isProfileHovered ? "visible" : "hidden"}
+              animate={isProfileHovered || isMobile ? "visible" : "hidden"}
               className="absolute bottom-[18%] left-[0%] bg-card-bg/90 border border-card-border/60 shadow-lg px-3 py-1.5 rounded-xl flex items-center gap-1.5 z-0 backdrop-blur-md cursor-pointer hover:scale-105 transition-transform"
             >
               <div className="p-1 rounded bg-yellow-500/10 text-yellow-500">

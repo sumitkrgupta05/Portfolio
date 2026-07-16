@@ -126,6 +126,22 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
+  // Prevent scrolling when mobile drawer is open
+  useEffect(() => {
+    const locoScroll = (window as unknown as { locoScroll?: { stop: () => void; start: () => void } }).locoScroll;
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      if (locoScroll) locoScroll.stop();
+    } else {
+      document.body.style.overflow = "";
+      if (locoScroll) locoScroll.start();
+    }
+    return () => {
+      document.body.style.overflow = "";
+      if (locoScroll) locoScroll.start();
+    };
+  }, [isOpen]);
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
@@ -144,97 +160,103 @@ export default function Navbar() {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/80 border-b border-card-border backdrop-blur-md py-4 shadow-sm"
-          : "bg-transparent py-6"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#home" className="text-xl font-bold tracking-tight flex items-center gap-2">
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-sf to-primary-ai flex items-center justify-center text-white font-extrabold text-sm shadow-md">
-            SK
-          </span>
-          <span className="font-extrabold bg-gradient-to-r from-primary-sf to-primary-ai bg-clip-text text-transparent">
-            Sumit.dev
-          </span>
-        </a>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.href.slice(1);
-            return (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className={`group relative px-4 py-2 text-sm font-semibold rounded-full transition-colors flex items-center gap-1.5 ${
-                  isActive
-                    ? "text-primary-sf dark:text-primary-ai"
-                    : "text-muted-text hover:text-foreground"
-                }`}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="activeNavIndicator"
-                    className="absolute inset-0 bg-muted-bg rounded-full -z-10 border border-card-border"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                {link.icon}
-                {link.name}
-              </a>
-            );
-          })}
-        </nav>
-
-        {/* Action Controls */}
-        <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full border border-card-border bg-card-bg hover:bg-muted-bg transition-colors shadow-sm text-foreground"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-          <a
-            href="#contact"
-            onClick={(e) => handleLinkClick(e, "#contact")}
-            className="flex items-center gap-1.5 bg-gradient-to-r from-primary-sf to-primary-ai text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-105"
-          >
-            Let&apos;s Talk
-            <ArrowUpRight size={16} />
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isOpen
+            ? "bg-white/95 dark:bg-[#09090b]/98 border-b border-card-border/50 py-4"
+            : scrolled
+            ? "bg-background/80 border-b border-card-border backdrop-blur-md py-4 shadow-sm"
+            : "bg-transparent py-6"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
+          <a href="#home" className="text-xl font-bold tracking-tight flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-sf to-primary-ai flex items-center justify-center text-white font-extrabold text-sm shadow-md">
+              SK
+            </span>
+            <span className="font-extrabold bg-gradient-to-r from-primary-sf to-primary-ai bg-clip-text text-transparent font-archivo">
+              Sumit.dev
+            </span>
           </a>
-        </div>
 
-        {/* Mobile Navbar Controls */}
-        <div className="flex items-center gap-3 md:hidden">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full border border-card-border bg-card-bg text-foreground"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className={`group relative px-4 py-2 text-sm font-semibold rounded-full transition-colors flex items-center gap-1.5 ${
+                    isActive
+                      ? "text-primary-sf dark:text-primary-ai"
+                      : "text-muted-text hover:text-foreground"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeNavIndicator"
+                      className="absolute inset-0 bg-muted-bg rounded-full -z-10 border border-card-border"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  {link.icon}
+                  {link.name}
+                </a>
+              );
+            })}
+          </nav>
 
-          {/* Hamburger Menu Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-lg border border-card-border bg-card-bg text-foreground relative z-50 focus:outline-none"
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {/* Action Controls */}
+          <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full border border-card-border bg-card-bg hover:bg-muted-bg transition-colors shadow-sm text-foreground cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <a
+              href="#contact"
+              onClick={(e) => handleLinkClick(e, "#contact")}
+              className="flex items-center gap-1.5 bg-gradient-to-r from-primary-sf to-primary-ai text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-105 cursor-pointer"
+            >
+              Let&apos;s Talk
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+
+          {/* Mobile Navbar Controls */}
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full border border-card-border bg-card-bg text-foreground cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            {/* Hamburger Menu Toggle */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg border border-card-border bg-card-bg text-foreground relative z-50 focus:outline-none cursor-pointer"
+              aria-label="Toggle Menu"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {/* Mobile Drawer (GSAP target) */}
       <div
         ref={menuBgRef}
-        className="fixed inset-0 top-[69px] z-40 bg-background/95 backdrop-blur-lg flex flex-col items-center justify-center md:hidden border-t border-card-border shadow-2xl"
+        className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#09090b]/98 backdrop-blur-lg flex flex-col items-center justify-center md:hidden shadow-2xl transition-all duration-300 pt-20 ${
+          isOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
         style={{ transform: "translateX(100%)", opacity: 0 }}
       >
         <div ref={linksRef} className="flex flex-col items-center gap-8 text-xl font-bold">
@@ -259,6 +281,6 @@ export default function Navbar() {
           </a>
         </div>
       </div>
-    </header>
+    </>
   );
 }

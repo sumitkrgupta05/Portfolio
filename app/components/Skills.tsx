@@ -72,9 +72,9 @@ export default function Skills() {
       icon: <Layers size={18} />,
       description: "Managing declarative configuration, platform security, data modeling, and flow orchestration.",
       accentColor: "blue",
-      glowClass: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_15px_rgba(37,99,235,0.15)]",
-      bgGlowClass: "from-blue-500/10 via-transparent to-transparent",
-      textColorClass: "text-blue-400",
+      glowClass: "group-hover:border-primary-sf/50 group-hover:shadow-[0_0_15px_var(--accent-glow)]",
+      bgGlowClass: "from-primary-sf/10 via-transparent to-transparent",
+      textColorClass: "text-primary-sf",
       skills: [
         {
           title: "User Management",
@@ -134,7 +134,7 @@ export default function Skills() {
       accentColor: "indigo",
       glowClass: "group-hover:border-indigo-500/50 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]",
       bgGlowClass: "from-indigo-500/10 via-transparent to-transparent",
-      textColorClass: "text-indigo-400",
+      textColorClass: "text-indigo-600 dark:text-indigo-400",
       skills: [
         {
           title: "LWC (Lightning Web Components)",
@@ -188,7 +188,7 @@ export default function Skills() {
       accentColor: "emerald",
       glowClass: "group-hover:border-emerald-500/50 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.15)]",
       bgGlowClass: "from-emerald-500/10 via-transparent to-transparent",
-      textColorClass: "text-emerald-400",
+      textColorClass: "text-emerald-600 dark:text-emerald-400",
       skills: [
         {
           title: "REST API",
@@ -234,9 +234,9 @@ export default function Skills() {
       icon: <Bot size={18} />,
       description: "Configuring autonomous conversational agents, prompt grounding, and model governance.",
       accentColor: "teal",
-      glowClass: "group-hover:border-teal-500/50 group-hover:shadow-[0_0_15px_rgba(20,184,166,0.15)]",
-      bgGlowClass: "from-teal-500/10 via-transparent to-transparent",
-      textColorClass: "text-teal-400",
+      glowClass: "group-hover:border-primary-ai/50 group-hover:shadow-[0_0_15px_var(--accent-glow)]",
+      bgGlowClass: "from-primary-ai/10 via-transparent to-transparent",
+      textColorClass: "text-primary-ai",
       skills: [
         {
           title: "Agent Builder",
@@ -284,7 +284,7 @@ export default function Skills() {
       accentColor: "violet",
       glowClass: "group-hover:border-violet-500/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]",
       bgGlowClass: "from-violet-500/10 via-transparent to-transparent",
-      textColorClass: "text-violet-400",
+      textColorClass: "text-violet-600 dark:text-violet-400",
       skills: [
         {
           title: "Git & GitHub",
@@ -332,7 +332,7 @@ export default function Skills() {
       accentColor: "sky",
       glowClass: "group-hover:border-sky-500/50 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.15)]",
       bgGlowClass: "from-sky-500/10 via-transparent to-transparent",
-      textColorClass: "text-sky-400",
+      textColorClass: "text-sky-600 dark:text-sky-400",
       skills: [
         {
           title: "Sales Cloud",
@@ -365,9 +365,9 @@ export default function Skills() {
   const currentCategory = categories.find((cat) => cat.id === activeCategory) || categories[0];
 
   return (
-    <section id="skills" className="py-20 relative overflow-hidden bg-zinc-950 flex flex-col justify-center min-h-screen">
+    <section id="skills" className="py-20 relative overflow-hidden bg-background flex flex-col justify-center min-h-screen">
       {/* Dynamic ambient backlights based on current selection */}
-      <div className={`absolute right-10 top-1/4 w-96 h-96 rounded-full blur-3xl opacity-10 pointer-events-none transition-all duration-1000 ${
+      <div className={`absolute right-10 top-1/4 w-96 h-96 rounded-full blur-3xl opacity-5 dark:opacity-10 pointer-events-none transition-all duration-1000 ${
         activeCategory === "admin" ? "bg-blue-600"
           : activeCategory === "development" ? "bg-indigo-600"
           : activeCategory === "agentforce" ? "bg-teal-600"
@@ -375,7 +375,7 @@ export default function Skills() {
           : activeCategory === "tools" ? "bg-violet-600"
           : "bg-sky-600"
       }`} />
-      <div className={`absolute left-10 bottom-1/4 w-96 h-96 rounded-full blur-3xl opacity-10 pointer-events-none transition-all duration-1000 ${
+      <div className={`absolute left-10 bottom-1/4 w-96 h-96 rounded-full blur-3xl opacity-5 dark:opacity-10 pointer-events-none transition-all duration-1000 ${
         activeCategory === "admin" ? "bg-blue-600"
           : activeCategory === "development" ? "bg-indigo-600"
           : activeCategory === "agentforce" ? "bg-teal-600"
@@ -388,36 +388,53 @@ export default function Skills() {
         
         {/* Section Heading - Compact */}
         <div className="text-center max-w-2xl mx-auto mb-10 select-none">
-          <span className="text-[10px] font-bold tracking-widest uppercase bg-zinc-900 border border-zinc-800 text-zinc-400 px-3 py-1 rounded-full w-fit">
+          <span className="text-[10px] font-bold tracking-widest uppercase bg-muted-bg border border-card-border text-muted-text px-3 py-1 rounded-full w-fit">
             Capabilities
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-3">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-3">
             Technical Console
           </h2>
           <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto mt-3 rounded-full" />
         </div>
 
         {/* Dashboard Grid Container - Fixed viewport sizing on desktop */}
-        <div className="w-full max-w-5xl mx-auto bg-zinc-950/40 border border-zinc-900 rounded-3xl backdrop-blur-xl shadow-2xl p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 items-stretch lg:h-[500px]">
+        <div className="w-full max-w-5xl mx-auto bg-card-bg/40 border border-card-border rounded-3xl backdrop-blur-xl shadow-md dark:shadow-2xl p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 items-stretch lg:h-[500px]">
           
           {/* LEFT COLUMN: Sidebar Category Tabs */}
-          <div className="w-full lg:w-1/3 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto pb-3 lg:pb-0 scrollbar-none border-b border-zinc-900 lg:border-b-0 lg:border-r lg:pr-6 border-zinc-900 shrink-0">
+          <div className="w-full lg:w-1/3 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto pb-3 lg:pb-0 scrollbar-none border-b border-card-border/60 lg:border-b-0 lg:border-r lg:pr-6 shrink-0">
             {categories.map((category) => {
               const isActive = activeCategory === category.id;
+              
+              // Dynamic active colors based on category id to ensure high contrast in both themes
+              let activeButtonClass = "";
+              if (category.id === "admin") {
+                activeButtonClass = "bg-primary-sf/15 border-primary-sf/30 text-primary-sf shadow-sm";
+              } else if (category.id === "development") {
+                activeButtonClass = "bg-indigo-500/15 border-indigo-500/30 text-indigo-600 dark:text-indigo-400 shadow-sm";
+              } else if (category.id === "integration") {
+                activeButtonClass = "bg-emerald-500/15 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm";
+              } else if (category.id === "agentforce") {
+                activeButtonClass = "bg-primary-ai/15 border-primary-ai/30 text-primary-ai shadow-sm";
+              } else if (category.id === "tools") {
+                activeButtonClass = "bg-violet-500/15 border-violet-500/30 text-violet-600 dark:text-violet-400 shadow-sm";
+              } else {
+                activeButtonClass = "bg-sky-500/15 border-sky-500/30 text-sky-600 dark:text-sky-400 shadow-sm";
+              }
+
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center gap-3 w-auto lg:w-full px-4 py-2.5 rounded-2xl border text-left transition-all duration-300 cursor-pointer whitespace-nowrap lg:whitespace-normal shrink-0 ${
                     isActive
-                      ? "bg-zinc-900 border-zinc-800 text-white shadow-lg"
-                      : "bg-transparent border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/30"
+                      ? activeButtonClass + " font-bold"
+                      : "bg-transparent border-transparent text-muted-text hover:text-foreground hover:bg-muted-bg/30"
                   }`}
                 >
                   <div className={`p-2 rounded-xl border transition-colors ${
                     isActive 
-                      ? "bg-zinc-950 border-zinc-800 " + category.textColorClass
-                      : "bg-transparent border-transparent text-zinc-500"
+                      ? "bg-card-bg border-card-border " + category.textColorClass
+                      : "bg-transparent border-transparent text-muted-text"
                   }`}>
                     {category.icon}
                   </div>
@@ -436,8 +453,8 @@ export default function Skills() {
           <div className="flex-1 flex flex-col justify-between overflow-y-auto pr-1.5 dashboard-scrollbar">
             
             {/* Header info (visible on all screens for details of the active capability) */}
-            <div className="mb-4 px-1 select-none border-b border-zinc-900/60 pb-3 shrink-0">
-              <h3 className="text-xs font-extrabold text-white flex items-center gap-2">
+            <div className="mb-4 px-1 select-none border-b border-card-border/60 pb-3 shrink-0">
+              <h3 className="text-xs font-extrabold text-foreground flex items-center gap-2">
                 <span className={`w-1.5 h-1.5 rounded-full ${
                   activeCategory === "admin" ? "bg-blue-500"
                     : activeCategory === "development" ? "bg-indigo-500"
@@ -448,7 +465,7 @@ export default function Skills() {
                 }`} />
                 {currentCategory.title}
               </h3>
-              <p className="text-[10px] text-zinc-500 font-normal leading-relaxed mt-1">
+              <p className="text-[10px] text-muted-text font-normal leading-relaxed mt-1">
                 {currentCategory.description}
               </p>
             </div>
@@ -470,27 +487,27 @@ export default function Skills() {
                       onClick={() => setSelectedSkill(skill)}
                       whileHover={{ y: -3 }}
                       transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                      className={`group relative overflow-hidden bg-zinc-950 border border-zinc-900 rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[108px] select-none ${currentCategory.glowClass}`}
+                      className={`group relative overflow-hidden bg-card-bg border border-card-border rounded-2xl p-4 cursor-pointer transition-all duration-300 flex flex-col justify-between h-[108px] select-none ${currentCategory.glowClass}`}
                     >
                       {/* Subtle hover background radial glow */}
                       <div className={`absolute -right-10 -bottom-10 w-24 h-24 rounded-full bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none blur-xl ${currentCategory.bgGlowClass}`} />
 
                       {/* Card Header */}
                       <div className="flex items-start justify-between">
-                        <div className={`p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 group-hover:text-white transition-colors duration-300`}>
+                        <div className={`p-1.5 rounded-lg bg-muted-bg border border-card-border text-muted-text group-hover:text-foreground transition-colors duration-300`}>
                           {skill.icon}
                         </div>
-                        <span className="text-[9px] font-mono text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 flex items-center gap-1">
+                        <span className="text-[9px] font-mono text-muted-text/80 group-hover:text-muted-text transition-colors duration-300 flex items-center gap-1">
                           <Info size={10} /> Details
                         </span>
                       </div>
 
                       {/* Card Body */}
                       <div className="space-y-1 mt-1">
-                        <h4 className="text-xs font-extrabold text-zinc-200 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-tight">
+                        <h4 className="text-xs font-extrabold text-foreground/90 group-hover:text-foreground transition-colors duration-300 line-clamp-2 leading-tight">
                           {skill.title}
                         </h4>
-                        <p className="text-[10px] text-zinc-500 font-mono">
+                        <p className="text-[10px] text-muted-text/80 font-mono">
                           {skill.subTopics.length} Core Concepts
                         </p>
                       </div>
@@ -501,7 +518,7 @@ export default function Skills() {
             </div>
 
             {/* Quick helper tip footer */}
-            <div className="mt-4 pt-3 border-t border-zinc-900/60 flex items-center justify-between text-[10px] text-zinc-500 font-mono select-none shrink-0">
+            <div className="mt-4 pt-3 border-t border-card-border/60 flex items-center justify-between text-[10px] text-muted-text font-mono select-none shrink-0">
               <span>Interactive dashboard</span>
               <span>Click card for detailed logs</span>
             </div>
@@ -515,11 +532,11 @@ export default function Skills() {
               background: transparent;
             }
             .dashboard-scrollbar::-webkit-scrollbar-thumb {
-              background: #1f1f22;
+              background: var(--card-border);
               border-radius: 10px;
             }
             .dashboard-scrollbar::-webkit-scrollbar-thumb:hover {
-              background: #2d2d30;
+              background: var(--muted);
             }
           `}</style>
         </div>
@@ -537,7 +554,7 @@ export default function Skills() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedSkill(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-md"
             />
 
             {/* Modal Body */}
@@ -546,7 +563,7 @@ export default function Skills() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", duration: 0.4 }}
-              className="relative w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden z-10 font-sans"
+              className="relative w-full max-w-md bg-card-bg border border-card-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden z-10 font-sans"
             >
               
               {/* Decorative radial overlay matching active category color */}
@@ -555,7 +572,7 @@ export default function Skills() {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedSkill(null)}
-                className="absolute right-5 top-5 p-2 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                className="absolute right-5 top-5 p-2 rounded-full bg-muted-bg hover:bg-card-border/50 border border-card-border text-muted-text hover:text-foreground transition-colors cursor-pointer"
                 aria-label="Close modal"
               >
                 <X size={14} />
@@ -568,20 +585,20 @@ export default function Skills() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className={`text-[9px] font-mono font-bold tracking-widest uppercase border px-2 py-0.5 rounded-md ${
-                      activeCategory === "admin" ? "text-blue-400 border-blue-500/20 bg-blue-500/5"
-                        : activeCategory === "development" ? "text-indigo-400 border-indigo-500/20 bg-indigo-500/5"
-                        : activeCategory === "agentforce" ? "text-teal-400 border-teal-500/20 bg-teal-500/5"
-                        : activeCategory === "integration" ? "text-emerald-400 border-emerald-500/20 bg-emerald-500/5"
-                        : activeCategory === "tools" ? "text-violet-400 border-violet-500/20 bg-violet-500/5"
-                        : "text-sky-400 border-sky-500/20 bg-sky-500/5"
+                      activeCategory === "admin" ? "text-primary-sf border-primary-sf/20 bg-primary-sf/5"
+                        : activeCategory === "development" ? "text-indigo-600 dark:text-indigo-400 border-indigo-500/20 dark:border-indigo-400/20 bg-indigo-500/5"
+                        : activeCategory === "agentforce" ? "text-primary-ai border-primary-ai/20 bg-primary-ai/5"
+                        : activeCategory === "integration" ? "text-emerald-600 dark:text-emerald-400 border-emerald-500/20 bg-emerald-500/5"
+                        : activeCategory === "tools" ? "text-violet-600 dark:text-violet-400 border-violet-500/20 bg-violet-500/5"
+                        : "text-sky-600 dark:text-sky-400 border-sky-500/20 bg-sky-500/5"
                     }`}>
                       {currentCategory.title}
                     </span>
                   </div>
-                  <h3 className="text-lg font-extrabold text-white pt-1">
+                  <h3 className="text-lg font-extrabold text-foreground pt-1">
                     {selectedSkill.title}
                   </h3>
-                  <p className="text-xs text-zinc-400 font-normal">
+                  <p className="text-xs text-muted-text font-normal">
                     {selectedSkill.sub}
                   </p>
                 </div>
@@ -589,23 +606,23 @@ export default function Skills() {
                 {/* Sub-topics section */}
                 {selectedSkill.subTopics && (
                   <div className="space-y-3.5">
-                    <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
+                    <h4 className="text-[10px] font-bold text-muted-text uppercase tracking-widest font-mono">
                       Core Sub-Topics
                     </h4>
                     <div className="grid grid-cols-1 gap-2">
                       {selectedSkill.subTopics.map((topic, tIdx) => (
-                        <div key={tIdx} className="flex items-center gap-3 bg-zinc-900/60 border border-zinc-800/50 px-4 py-3 rounded-xl hover:border-zinc-700 transition-colors">
+                        <div key={tIdx} className="flex items-center gap-3 bg-muted-bg/50 border border-card-border/60 px-4 py-3 rounded-xl hover:border-card-border transition-colors">
                           <span className={`text-[10px] font-mono shrink-0 ${
-                            activeCategory === "admin" ? "text-blue-400"
-                              : activeCategory === "development" ? "text-indigo-400"
-                              : activeCategory === "agentforce" ? "text-teal-400"
-                              : activeCategory === "integration" ? "text-emerald-400"
-                              : activeCategory === "tools" ? "text-violet-400"
-                              : "text-sky-400"
+                            activeCategory === "admin" ? "text-primary-sf"
+                              : activeCategory === "development" ? "text-indigo-600 dark:text-indigo-400"
+                              : activeCategory === "agentforce" ? "text-primary-ai"
+                              : activeCategory === "integration" ? "text-emerald-600 dark:text-emerald-400"
+                              : activeCategory === "tools" ? "text-violet-600 dark:text-violet-400"
+                              : "text-sky-600 dark:text-sky-400"
                           }`}>
                             $
                           </span>
-                          <span className="text-xs text-zinc-200 font-semibold">{topic}</span>
+                          <span className="text-xs text-foreground/80 font-semibold">{topic}</span>
                         </div>
                       ))}
                     </div>

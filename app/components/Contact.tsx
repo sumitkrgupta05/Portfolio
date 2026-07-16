@@ -151,26 +151,78 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Social Icons (Card-less inline icons) */}
-            <div className="flex items-center gap-6 pt-8 border-t border-card-border/40">
-              <a
-                href="https://www.linkedin.com/in/sumitkrgupta05"
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} className="animate-icon-bounce" />
-              </a>
-              <a
-                href="https://github.com/sumitkrgupta05"
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer"
-                aria-label="GitHub"
-              >
-                <Github size={20} className="animate-icon-spin" />
-              </a>
+            {/* Social Icons (Card-less inline icons with tooltips) */}
+            <div className="flex items-center gap-6 pt-8 border-t border-card-border/40 select-none">
+              
+              {/* LinkedIn */}
+              <div className="relative group/tooltip">
+                <a
+                  href="https://www.linkedin.com/in/sumitkrgupta05"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer block"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={20} className="animate-icon-bounce" />
+                </a>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[9px] font-bold text-foreground bg-card-bg border border-card-border rounded-md opacity-0 scale-95 group-hover/tooltip:opacity-100 group-hover/tooltip:scale-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-20 shadow-md">
+                  LinkedIn
+                </span>
+              </div>
+
+              {/* GitHub */}
+              <div className="relative group/tooltip">
+                <a
+                  href="https://github.com/sumitkrgupta05"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer block"
+                  aria-label="GitHub"
+                >
+                  <Github size={20} className="animate-icon-spin" />
+                </a>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[9px] font-bold text-foreground bg-card-bg border border-card-border rounded-md opacity-0 scale-95 group-hover/tooltip:opacity-100 group-hover/tooltip:scale-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-20 shadow-md">
+                  GitHub
+                </span>
+              </div>
+
+              {/* Trailhead */}
+              <div className="relative group/tooltip">
+                <a
+                  href="https://www.salesforce.com/trailblazer/sumitgupta05"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer flex items-center"
+                  aria-label="Trailhead"
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className="hover:-translate-y-1 transition-transform duration-300">
+                    <path d="M18.8 10.6c-.6 0-1.2.2-1.7.5-.5-2.2-2.5-3.8-4.8-3.8-1.5 0-2.8.7-3.7 1.8-.7-.6-1.6-.9-2.6-.9-2.2 0-4 1.8-4 4 0 .2 0 .4.1.6C.9 13.5 0 14.8 0 16.3c0 2.2 1.8 4 4 4h14.8c2.9 0 5.2-2.3 5.2-5.2s-2.3-5.5-5.2-5.5z" />
+                  </svg>
+                </a>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[9px] font-bold text-foreground bg-card-bg border border-card-border rounded-md opacity-0 scale-95 group-hover/tooltip:opacity-100 group-hover/tooltip:scale-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-20 shadow-md">
+                  Trailhead
+                </span>
+              </div>
+
+              {/* LeetCode */}
+              <div className="relative group/tooltip">
+                <a
+                  href="https://leetcode.com/u/skgsumit5/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted-text hover:text-primary-sf dark:hover:text-primary-ai transition-colors cursor-pointer flex items-center"
+                  aria-label="LeetCode"
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hover:-translate-y-1 transition-transform duration-300">
+                    <rect x="5" y="5" width="14" height="14" rx="3" transform="rotate(45 12 12)" />
+                    <path d="M10 8v6h5" />
+                  </svg>
+                </a>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[9px] font-bold text-foreground bg-card-bg border border-card-border rounded-md opacity-0 scale-95 group-hover/tooltip:opacity-100 group-hover/tooltip:scale-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-20 shadow-md">
+                  LeetCode
+                </span>
+              </div>
+
             </div>
           </div>
 
