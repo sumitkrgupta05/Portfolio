@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { 
@@ -16,13 +16,15 @@ import {
   ChevronRight, 
   Sparkles,
   Settings,
-  Code2
+  Code2,
+  X,
+  Award
 } from "lucide-react";
 
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-type FileTab = "teqfocus" | "tatasteel";
+type FileTab = "teqfocus" | "tatasteel" | "salesforce_admin" | "agentforce_specialist" | "claude_certificate";
 type TerminalState = "idle" | "running" | "completed";
 
 const teqfocusLogs = [
@@ -55,17 +57,73 @@ const tatasteelLogs = [
   "=========================================================================="
 ];
 
+const adminLogs = [
+  "sumit@developer-portfolio:~/certifications$ openssl verify Salesforce_Admin.cert",
+  "🔒 Connecting to Trailhead verification database...",
+  "📡 Matching Credential ID: ADM-3984102",
+  "✔ [Status: VERIFIED] Salesforce Certified Administrator",
+  "==========================================================================",
+  "✔ Holder: Sumit Kr Gupta",
+  "✔ Issuer: Salesforce.com, Inc.",
+  "✔ Verification Link: https://trailhead.salesforce.com/en/credentials/verification/",
+  "=========================================================================="
+];
+
+const agentforceLogs = [
+  "sumit@developer-portfolio:~/certifications$ openssl verify Agentforce_Specialist.cert",
+  "🔒 Connecting to Trailhead verification database...",
+  "📡 Matching Credential ID: AGT-4982130",
+  "✔ [Status: VERIFIED] Salesforce Certified Agentforce Specialist",
+  "==========================================================================",
+  "✔ Holder: Sumit Kr Gupta",
+  "✔ Issuer: Salesforce.com, Inc.",
+  "✔ Verification Link: https://trailhead.salesforce.com/en/credentials/verification/",
+  "=========================================================================="
+];
+
+const claudeLogs = [
+  "sumit@developer-portfolio:~/certifications$ openssl verify Claude_Developer.cert",
+  "🔒 Connecting to Anthropic Developer verification network...",
+  "📡 Matching Certificate ID: ANT-CLD-98104",
+  "✔ [Status: VERIFIED] Anthropic Claude Certified Prompt Engineer",
+  "==========================================================================",
+  "✔ Holder: Sumit Kr Gupta",
+  "✔ Issuer: Anthropic PBC",
+  "✔ Verification Link: https://www.anthropic.com/verification/",
+  "=========================================================================="
+];
+
+const logsMap: Record<FileTab, string[]> = {
+  teqfocus: teqfocusLogs,
+  tatasteel: tatasteelLogs,
+  salesforce_admin: adminLogs,
+  agentforce_specialist: agentforceLogs,
+  claude_certificate: claudeLogs
+};
+
+const tabsMeta: Record<FileTab, { name: string; iconColor: string; type: "code" | "cert" }> = {
+  teqfocus: { name: "TeqfocusSalesforce.ts", iconColor: "text-blue-400", type: "code" },
+  tatasteel: { name: "TataSteelML.py", iconColor: "text-yellow-500", type: "code" },
+  salesforce_admin: { name: "Salesforce_Admin.cert", iconColor: "text-teal-400", type: "cert" },
+  agentforce_specialist: { name: "Agentforce_Specialist.cert", iconColor: "text-purple-400", type: "cert" },
+  claude_certificate: { name: "Claude_Developer.cert", iconColor: "text-red-400", type: "cert" }
+};
+
 export default function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const terminalContainerRef = useRef<HTMLDivElement>(null);
   const terminalEndRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<FileTab>("teqfocus");
+  
+  const [activeTab, setActiveTab] = useState<FileTab | null>("teqfocus");
+  const [openTabs, setOpenTabs] = useState<FileTab[]>(["teqfocus", "tatasteel"]);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
+  const [isExperienceOpen, setIsExperienceOpen] = useState(true);
+  const [isCertificationsOpen, setIsCertificationsOpen] = useState(true);
+  
   const [terminalState, setTerminalState] = useState<TerminalState>("idle");
   const [visibleLogLines, setVisibleLogLines] = useState<string[]>([]);
   const [isTerminalOpen, setIsTerminalOpen] = useState(true);
   
-  // Timer reference for clearing the terminal typing intervals
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const clearTimer = () => {
@@ -101,16 +159,14 @@ export default function Experience() {
     return () => ctx.revert();
   }, []);
 
-
-
   const runTerminal = () => {
-    if (terminalState === "running") return;
+    if (!activeTab || terminalState === "running") return;
     clearTimer();
     setIsTerminalOpen(true);
     setTerminalState("running");
     setVisibleLogLines([]);
     
-    const logs = activeTab === "teqfocus" ? teqfocusLogs : tatasteelLogs;
+    const logs = logsMap[activeTab];
     let index = 0;
     
     // Simulate terminal typing line-by-line
@@ -125,7 +181,7 @@ export default function Experience() {
         clearTimer();
         setTerminalState("completed");
       }
-    }, 280); // Quick dynamic typewriter speed
+    }, 280);
   };
 
   const resetTerminal = () => {
@@ -146,6 +202,26 @@ export default function Experience() {
       terminalContainerRef.current.scrollTop = terminalContainerRef.current.scrollHeight;
     }
   }, [visibleLogLines]);
+
+  const openFile = (tabId: FileTab) => {
+    if (!openTabs.includes(tabId)) {
+      setOpenTabs(prev => [...prev, tabId]);
+    }
+    setActiveTab(tabId);
+  };
+
+  const closeFile = (e: React.MouseEvent, tabId: FileTab) => {
+    e.stopPropagation();
+    const nextTabs = openTabs.filter(t => t !== tabId);
+    setOpenTabs(nextTabs);
+    if (activeTab === tabId) {
+      if (nextTabs.length > 0) {
+        setActiveTab(nextTabs[nextTabs.length - 1]);
+      } else {
+        setActiveTab(null);
+      }
+    }
+  };
 
   const renderTeqfocusCode = () => {
     return (
@@ -254,6 +330,103 @@ export default function Experience() {
     );
   };
 
+  const renderCertificate = (title: string, id: string, date: string, issuer: string, description: string, badgeGlow: string) => {
+    return (
+      <div className="font-mono text-zinc-300 p-6 rounded-xl border border-card-border/50 bg-[#0c0c10] space-y-5 max-w-xl mx-auto relative overflow-hidden select-text my-4 shadow-xl">
+        {/* Glowing background accent */}
+        <div className={`absolute -right-16 -bottom-16 w-36 h-36 rounded-full blur-3xl opacity-15 ${badgeGlow}`} />
+
+        {/* Certificate Header Banner */}
+        <div className="text-center space-y-1.5 pb-4 border-b border-card-border/30">
+          <div className="text-amber-500 font-extrabold tracking-widest text-[10px] uppercase flex items-center justify-center gap-1.5">
+            <Sparkles size={12} className="animate-pulse" />
+            VERIFIED CREDENTIAL
+            <Sparkles size={12} className="animate-pulse" />
+          </div>
+          <h3 className="text-base sm:text-lg font-extrabold text-foreground tracking-tight">{title}</h3>
+          <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">ISSUER: {issuer}</p>
+        </div>
+
+        {/* Certificate Recipient details */}
+        <div className="text-center space-y-2 py-4">
+          <p className="text-[11px] text-zinc-500 italic">This certifies that the recipient</p>
+          <p className="text-base font-bold text-foreground tracking-wide uppercase">{`Sumit Kr Gupta`}</p>
+          <p className="text-[11px] text-zinc-400 leading-relaxed max-w-sm mx-auto pt-2 px-1">
+            {description}
+          </p>
+        </div>
+
+        {/* Certificate ID metadata footer */}
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-card-border/30 text-[10px] text-zinc-500">
+          <div>
+            <span className="block font-bold text-zinc-400 uppercase tracking-wider">Credential ID</span>
+            <span className="font-mono">{id}</span>
+          </div>
+          <div className="text-right">
+            <span className="block font-bold text-zinc-400 uppercase tracking-wider">Date Issued</span>
+            <span>{date}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderActiveContent = () => {
+    if (!activeTab) {
+      return (
+        <div className="flex-grow h-full flex flex-col items-center justify-center text-zinc-600 font-mono select-none py-12">
+          <Code2 size={40} className="text-zinc-700/60 mb-3 animate-pulse" />
+          <span className="text-xs">No files open</span>
+          <span className="text-[10px] text-zinc-700 mt-1">Select a file from the explorer sidebar</span>
+        </div>
+      );
+    }
+
+    if (activeTab === "teqfocus") return renderTeqfocusCode();
+    if (activeTab === "tatasteel") return renderTataSteelCode();
+    
+    if (activeTab === "salesforce_admin") {
+      return renderCertificate(
+        "Salesforce Certified Administrator",
+        "ADM-3984102",
+        "November 2024",
+        "Salesforce.com, Inc.",
+        "Demonstrates complete core administrative mastery: designing custom security/sharing policies, automations, objects, reports, and overall organization setups.",
+        "bg-blue-500"
+      );
+    }
+    
+    if (activeTab === "agentforce_specialist") {
+      return renderCertificate(
+        "Salesforce Certified Agentforce Specialist",
+        "AGT-4982130",
+        "June 2025",
+        "Salesforce.com, Inc.",
+        "Demonstrates advanced knowledge of autonomous Agentforce configurations, semantic routing, guardrail definitions, custom invocables, and external system integrations.",
+        "bg-purple-500"
+      );
+    }
+    
+    if (activeTab === "claude_certificate") {
+      return renderCertificate(
+        "Anthropic Claude Certified Prompt Engineer",
+        "ANT-CLD-98104",
+        "January 2025",
+        "Anthropic PBC",
+        "Demonstrates state-of-the-art proficiency in prompt engineering, context window structuring, advanced system directives, XML structuring, and automated tool integrations.",
+        "bg-teal-500"
+      );
+    }
+
+    return null;
+  };
+
+  // Folder toggle child height animations
+  const accordionVariants: Variants = {
+    hidden: { height: 0, opacity: 0 },
+    visible: { height: "auto", opacity: 1, transition: { duration: 0.25, ease: "easeInOut" } }
+  };
+
   return (
     <section id="experience" className="py-24 bg-muted-bg/10 relative overflow-hidden" ref={containerRef}>
       {/* Background Abstract Glow */}
@@ -283,25 +456,31 @@ export default function Experience() {
           <div className="h-11 bg-[#121217] border-b border-card-border/50 px-4 flex items-center justify-between text-xs">
             {/* Window Controls */}
             <div className="flex items-center gap-1.5 w-1/4">
-              <span className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors" />
-              <span className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors" />
-              <span className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors" />
+              <span className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors cursor-pointer" />
+              <span className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors cursor-pointer" />
+              <span className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors cursor-pointer" />
             </div>
             
             {/* Window Title */}
             <div className="hidden sm:flex items-center gap-1.5 text-zinc-400 font-mono text-[11px] w-2/4 justify-center">
               <Code2 size={13} />
-              <span>sumit-portfolio-workspace // {activeTab === "teqfocus" ? "TeqfocusSalesforce.ts" : "TataSteelML.py"}</span>
+              <span>sumit-portfolio-workspace // {activeTab ? tabsMeta[activeTab].name : "Editor"}</span>
             </div>
-
+ 
             {/* Run and Reset Action Trigger Panel */}
             <div className="flex items-center justify-end gap-2.5 w-1/4">
               {terminalState === "idle" ? (
                 <button
                   onClick={runTerminal}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-[10px] sm:text-xs rounded-md shadow-sm transition-all cursor-pointer hover:shadow-emerald-600/10"
+                  disabled={!activeTab}
+                  className={`flex items-center gap-1.5 px-3 py-1 text-white font-bold text-[10px] sm:text-xs rounded-md shadow-sm transition-all cursor-pointer 
+                    ${activeTab 
+                      ? "bg-emerald-600 hover:bg-emerald-500 active:scale-95 hover:shadow-emerald-600/10" 
+                      : "bg-zinc-700/50 text-zinc-500 cursor-not-allowed"
+                    }
+                  `}
                 >
-                  <Play size={10} className="fill-white" />
+                  <Play size={10} className={activeTab ? "fill-white" : "fill-zinc-500"} />
                   <span>Run</span>
                 </button>
               ) : (
@@ -333,44 +512,123 @@ export default function Experience() {
             >
               <div className="p-3 border-b border-card-border/30 text-[10px] font-bold tracking-wider text-zinc-500 flex items-center justify-between">
                 <span>EXPLORER</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-[8px]">2</span>
+                <span className="w-4 h-4 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center text-[9px] font-bold">5</span>
               </div>
               
-              <div className="p-2 space-y-1">
-                {/* Folder Item */}
-                <div className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1">
-                  <ChevronDown size={14} />
-                  <FolderOpen size={14} className="text-blue-400" />
-                  <span>experience</span>
-                </div>
-                
-                {/* Files */}
-                <div className="pl-4 space-y-0.5">
-                  <button 
-                    onClick={() => setActiveTab("teqfocus")}
-                    className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
-                      ${activeTab === "teqfocus" 
-                        ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
-                        : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
-                      }
-                    `}
+              <div className="p-2 space-y-2 overflow-y-auto">
+                {/* Folder Item: Experience */}
+                <div>
+                  <div 
+                    onClick={() => setIsExperienceOpen(!isExperienceOpen)}
+                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                   >
-                    <FileCode size={14} className="text-blue-400 flex-shrink-0" />
-                    <span className="truncate">TeqfocusSalesforce.ts</span>
-                  </button>
+                    {isExperienceOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                    {isExperienceOpen ? <FolderOpen size={14} className="text-blue-400" /> : <Folder size={14} className="text-blue-400" />}
+                    <span>experience</span>
+                  </div>
+                  
+                  {/* Experience Files */}
+                  <AnimatePresence initial={false}>
+                    {isExperienceOpen && (
+                      <motion.div
+                        variants={accordionVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="pl-4 mt-0.5 space-y-0.5 overflow-hidden"
+                      >
+                        <button 
+                          onClick={() => openFile("teqfocus")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "teqfocus" 
+                              ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <FileCode size={14} className="text-blue-400 flex-shrink-0" />
+                          <span className="truncate">TeqfocusSalesforce.ts</span>
+                        </button>
 
-                  <button 
-                    onClick={() => setActiveTab("tatasteel")}
-                    className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
-                      ${activeTab === "tatasteel" 
-                        ? "bg-[#14b8a6]/10 border border-[#14b8a6]/20 text-[#14b8a6] font-bold" 
-                        : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
-                      }
-                    `}
+                        <button 
+                          onClick={() => openFile("tatasteel")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "tatasteel" 
+                              ? "bg-[#14b8a6]/10 border border-[#14b8a6]/20 text-[#14b8a6] font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <FileCode size={14} className="text-yellow-500 flex-shrink-0" />
+                          <span className="truncate">TataSteelML.py</span>
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Folder Item: Certifications */}
+                <div>
+                  <div 
+                    onClick={() => setIsCertificationsOpen(!isCertificationsOpen)}
+                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                   >
-                    <FileCode size={14} className="text-yellow-500 flex-shrink-0" />
-                    <span className="truncate">TataSteelML.py</span>
-                  </button>
+                    {isCertificationsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                    {isCertificationsOpen ? <FolderOpen size={14} className="text-teal-400" /> : <Folder size={14} className="text-teal-400" />}
+                    <span>certifications</span>
+                  </div>
+
+                  {/* Certifications Files */}
+                  <AnimatePresence initial={false}>
+                    {isCertificationsOpen && (
+                      <motion.div
+                        variants={accordionVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="pl-4 mt-0.5 space-y-0.5 overflow-hidden"
+                      >
+                        <button 
+                          onClick={() => openFile("salesforce_admin")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "salesforce_admin" 
+                              ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <Award size={14} className="text-blue-400 flex-shrink-0" />
+                          <span className="truncate">Salesforce_Admin.cert</span>
+                        </button>
+
+                        <button 
+                          onClick={() => openFile("agentforce_specialist")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "agentforce_specialist" 
+                              ? "bg-purple-500/10 border border-purple-500/20 text-purple-400 font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <Award size={14} className="text-purple-400 flex-shrink-0" />
+                          <span className="truncate">Agentforce_Specialist.cert</span>
+                        </button>
+
+                        <button 
+                          onClick={() => openFile("claude_certificate")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "claude_certificate" 
+                              ? "bg-[#14b8a6]/10 border border-[#14b8a6]/20 text-[#14b8a6] font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <Award size={14} className="text-teal-400 flex-shrink-0" />
+                          <span className="truncate">Claude_Developer.cert</span>
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </div>
@@ -379,40 +637,44 @@ export default function Experience() {
             <div className="flex-grow flex flex-col overflow-hidden bg-[#0a0a0d]">
               
               {/* Tab headers */}
-              <div className="h-9 bg-[#0e0e12] border-b border-card-border/30 flex items-center px-1 text-xs select-none">
-                <button
-                  onClick={() => setActiveTab("teqfocus")}
-                  className={`px-4 h-full flex items-center gap-2 border-r border-card-border/20 text-left transition-colors cursor-pointer
-                    ${activeTab === "teqfocus"
-                      ? "bg-[#0a0a0d] border-b-2 border-b-[#3b82f6] text-[#3b82f6] font-bold"
-                      : "text-zinc-500 hover:bg-[#121217] hover:text-zinc-300"
-                    }
-                  `}
-                >
-                  <FileCode size={13} className="text-blue-400" />
-                  <span>TeqfocusSalesforce.ts</span>
-                </button>
+              <div className="h-9 bg-[#0e0e12] border-b border-card-border/30 flex items-center px-1 text-xs select-none overflow-x-auto scrollbar-none">
+                {openTabs.map((tabId) => {
+                  const meta = tabsMeta[tabId];
+                  const isActive = activeTab === tabId;
+                  const icon = meta.type === "code" 
+                    ? <FileCode size={13} className={meta.iconColor} /> 
+                    : <Award size={13} className={meta.iconColor} />;
 
-                <button
-                  onClick={() => setActiveTab("tatasteel")}
-                  className={`px-4 h-full flex items-center gap-2 border-r border-card-border/20 text-left transition-colors cursor-pointer
-                    ${activeTab === "tatasteel"
-                      ? "bg-[#0a0a0d] border-b-2 border-b-[#14b8a6] text-[#14b8a6] font-bold"
-                      : "text-zinc-500 hover:bg-[#121217] hover:text-zinc-300"
-                    }
-                  `}
-                >
-                  <FileCode size={13} className="text-yellow-500" />
-                  <span>TataSteelML.py</span>
-                </button>
+                  return (
+                    <div
+                      key={tabId}
+                      onClick={() => setActiveTab(tabId)}
+                      className={`h-full flex items-center gap-2 border-r border-card-border/20 px-3 text-left transition-colors cursor-pointer relative group
+                        ${isActive
+                          ? "bg-[#0a0a0d] border-b-2 border-b-[#3b82f6] text-[#3b82f6] font-bold"
+                          : "text-zinc-500 hover:bg-[#121217] hover:text-zinc-300"
+                        }
+                      `}
+                    >
+                      {icon}
+                      <span className="text-[10px] sm:text-xs truncate max-w-[120px] sm:max-w-none">{meta.name}</span>
+                      <button
+                        onClick={(e) => closeFile(e, tabId)}
+                        className="p-0.5 rounded hover:bg-zinc-800 text-zinc-600 hover:text-zinc-400 transition-colors ml-1 active:scale-90"
+                      >
+                        <X size={10} />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Code Panel */}
               <div 
                 data-lenis-prevent
-                className="flex-grow p-4 h-[280px] overflow-y-auto overflow-x-auto code-editor-scrollbar select-text"
+                className="flex-grow p-4 h-[280px] overflow-y-auto overflow-x-auto code-editor-scrollbar select-text bg-[#0a0a0d]"
               >
-                {activeTab === "teqfocus" ? renderTeqfocusCode() : renderTataSteelCode()}
+                {renderActiveContent()}
               </div>
 
               {/* Expandable Simulated Terminal Panel */}
@@ -428,15 +690,15 @@ export default function Experience() {
                     <Terminal size={12} className={terminalState === "running" ? "animate-pulse text-emerald-400" : ""} />
                     <span className="font-bold">TERMINAL CONSOLE</span>
                     {terminalState === "running" && (
-                      <span className="text-[10px] text-emerald-500 animate-pulse bg-emerald-500/10 px-2 py-0.5 rounded-full">running...</span>
+                      <span className="text-[10px] text-emerald-500 animate-pulse bg-emerald-500/10 px-2 py-0.5 rounded-full font-bold">running...</span>
                     )}
                     {terminalState === "completed" && (
-                      <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1 font-bold">
                         <CheckCircle size={10} /> completed
                       </span>
                     )}
                   </div>
-                  <div className="text-[10px] text-zinc-500">
+                  <div className="text-[10px] text-zinc-500 font-bold">
                     {isTerminalOpen ? "Click to collapse" : "Click to expand"}
                   </div>
                 </div>
@@ -450,9 +712,12 @@ export default function Experience() {
                   >
                     {visibleLogLines.length === 0 && terminalState === "idle" && (
                       <div className="text-zinc-600">
-                        sumit@developer-portfolio:~/experience$ <span className="animate-pulse">_</span>
+                        sumit@developer-portfolio:~{activeTab && tabsMeta[activeTab].type === "cert" ? "/certifications" : "/experience"}$ <span className="animate-pulse">_</span>
                         <div className="text-[10px] italic text-zinc-500 mt-2">
-                          Hint: Click the green &quot;Run&quot; button in the top right to execute components compile.
+                          {activeTab 
+                            ? `Hint: Click the green "Run" button in the top right to verify ${tabsMeta[activeTab].name}.`
+                            : "Hint: Open a file in the explorer, then click \"Run\"."
+                          }
                         </div>
                       </div>
                     )}
@@ -481,13 +746,13 @@ export default function Experience() {
                         <span className="inline-block animate-bounce">.</span>
                         <span className="inline-block animate-bounce [animation-delay:0.2s]">.</span>
                         <span className="inline-block animate-bounce [animation-delay:0.4s]">.</span>
-                        <span className="text-zinc-500 text-[10px] ml-2 animate-pulse">executing line compilation...</span>
+                        <span className="text-zinc-500 text-[10px] ml-2 animate-pulse">executing verification sequence...</span>
                       </div>
                     )}
 
                     {terminalState === "completed" && (
                       <div className="text-emerald-400 font-bold animate-pulse text-[10px] sm:text-xs mt-2">
-                        sumit@developer-portfolio:~/experience$ <span className="animate-pulse">_</span>
+                        sumit@developer-portfolio:~{activeTab && tabsMeta[activeTab].type === "cert" ? "/certifications" : "/experience"}$ <span className="animate-pulse">_</span>
                       </div>
                     )}
                     
@@ -511,13 +776,15 @@ export default function Experience() {
                 <span>{isExplorerOpen ? "Hide Sidebar" : "Show Sidebar"}</span>
               </button>
               <span className="hidden sm:inline">|</span>
-              <span className="hidden sm:inline text-zinc-600">Ln {activeTab === "teqfocus" ? 47 : 46}, Col 1</span>
+              <span className="hidden sm:inline text-zinc-600">Ln 1, Col 1</span>
             </div>
 
             <div className="flex items-center gap-3">
               <span>UTF-8</span>
               <span>LF</span>
-              <span className="text-[#3b82f6] font-bold">{activeTab === "teqfocus" ? "TypeScript" : "Python"}</span>
+              <span className="text-[#3b82f6] font-bold">
+                {activeTab ? (tabsMeta[activeTab].type === "code" ? (activeTab === "teqfocus" ? "TypeScript" : "Python") : "Certificate") : "Text"}
+              </span>
             </div>
           </div>
 
