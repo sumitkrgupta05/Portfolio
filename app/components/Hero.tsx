@@ -302,11 +302,17 @@ export default function Hero() {
               <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
-              onClick={() => setIsResumeOpen(true)}
+              onClick={() => {
+                if (isMobile || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                  window.open("/Sumit_Kumar_Gupta_Resume.pdf", "_blank");
+                } else {
+                  setIsResumeOpen(true);
+                }
+              }}
               className="flex items-center justify-center gap-2 bg-card-bg hover:bg-muted-bg text-foreground border border-card-border font-bold px-6 py-3.5 rounded-xl text-sm transition-all cursor-pointer shadow-sm hover:border-foreground/20"
             >
               <FileText size={16} className="text-primary-sf dark:text-primary-ai" />
-              View Resume
+               View Resume
             </button>
           </div>
         </div>

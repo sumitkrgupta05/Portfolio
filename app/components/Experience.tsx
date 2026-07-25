@@ -128,6 +128,14 @@ export default function Experience() {
   
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Recalculate Locomotive scroll boundary height when folders collapse/expand
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 280);
+    return () => clearTimeout(timer);
+  }, [isExperienceOpen, isCertificationsOpen]);
+
   const clearTimer = () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -578,7 +586,7 @@ export default function Experience() {
                 <div>
                   <div 
                     onClick={() => setIsExperienceOpen(!isExperienceOpen)}
-                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-2 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                   >
                     {isExperienceOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                     {isExperienceOpen ? <FolderOpen size={14} className="text-blue-400" /> : <Folder size={14} className="text-blue-400" />}
@@ -629,7 +637,7 @@ export default function Experience() {
                 <div>
                   <div 
                     onClick={() => setIsCertificationsOpen(!isCertificationsOpen)}
-                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                    className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-2 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                   >
                     {isCertificationsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                     {isCertificationsOpen ? <FolderOpen size={14} className="text-teal-400" /> : <Folder size={14} className="text-teal-400" />}
@@ -726,7 +734,7 @@ export default function Experience() {
                       <div>
                         <div 
                           onClick={() => setIsExperienceOpen(!isExperienceOpen)}
-                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-2 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                         >
                           {isExperienceOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                           {isExperienceOpen ? <FolderOpen size={14} className="text-blue-400" /> : <Folder size={14} className="text-blue-400" />}
@@ -783,7 +791,7 @@ export default function Experience() {
                       <div>
                         <div 
                           onClick={() => setIsCertificationsOpen(!isCertificationsOpen)}
-                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-2 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
                         >
                           {isCertificationsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                           {isCertificationsOpen ? <FolderOpen size={14} className="text-teal-400" /> : <Folder size={14} className="text-teal-400" />}
@@ -892,9 +900,9 @@ export default function Experience() {
                       <span className="text-[10px] sm:text-xs truncate max-w-[120px] sm:max-w-none">{meta.name}</span>
                       <button
                         onClick={(e) => closeFile(e, tabId)}
-                        className="p-0.5 rounded hover:bg-zinc-800 text-zinc-600 hover:text-zinc-400 transition-colors ml-1 active:scale-90"
+                        className="w-6 h-6 flex items-center justify-center rounded hover:bg-zinc-800 text-zinc-600 hover:text-zinc-400 transition-colors -mr-1 cursor-pointer active:scale-90"
                       >
-                        <X size={10} />
+                        <X size={11} />
                       </button>
                     </div>
                   );
