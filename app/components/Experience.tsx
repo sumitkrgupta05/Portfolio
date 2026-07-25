@@ -405,12 +405,12 @@ export default function Experience() {
         </div>
 
         {/* Action Controls */}
-        <div className="w-full flex items-center justify-between px-1">
+        <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2 px-1">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-primary-sf dark:text-primary-ai uppercase tracking-wider">
+            <span className="text-[9px] sm:text-[10px] font-bold text-primary-sf dark:text-primary-ai uppercase tracking-wider">
               Verified Credential
             </span>
-            <span className="text-xs font-bold text-foreground truncate max-w-[200px] sm:max-w-none mt-0.5">
+            <span className="text-xs font-bold text-foreground mt-0.5 truncate max-w-[260px] sm:max-w-none">
               {title}
             </span>
           </div>
@@ -418,7 +418,7 @@ export default function Experience() {
             href={verifyUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-primary-sf to-primary-ai text-white font-bold text-[10px] rounded-xl shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+            className="flex items-center justify-center gap-1.5 px-3 py-1.5 sm:py-2 bg-gradient-to-r from-primary-sf to-primary-ai text-white font-bold text-[9px] sm:text-[10px] rounded-xl shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer w-full sm:w-auto text-center"
           >
             Verify Credential ↗
           </a>
