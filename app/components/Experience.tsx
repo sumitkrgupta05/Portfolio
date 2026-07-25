@@ -120,6 +120,7 @@ export default function Experience() {
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const [isExperienceOpen, setIsExperienceOpen] = useState(true);
   const [isCertificationsOpen, setIsCertificationsOpen] = useState(true);
+  const [isMobileExplorerOpen, setIsMobileExplorerOpen] = useState(false);
   
   const [terminalState, setTerminalState] = useState<TerminalState>("idle");
   const [visibleLogLines, setVisibleLogLines] = useState<string[]>([]);
@@ -432,7 +433,14 @@ export default function Experience() {
         <div className="flex-grow h-full flex flex-col items-center justify-center text-zinc-600 font-mono select-none py-12">
           <Code2 size={40} className="text-zinc-700/60 mb-3 animate-pulse" />
           <span className="text-xs">No files open</span>
-          <span className="text-[10px] text-zinc-700 mt-1">Select a file from the explorer sidebar</span>
+          <span className="text-[10px] text-zinc-700 mt-1 mb-4 text-center">Select a file from the explorer sidebar</span>
+          <button
+            onClick={() => setIsMobileExplorerOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-primary-sf to-primary-ai text-white font-bold text-xs rounded-xl shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer md:hidden"
+          >
+            <FolderOpen size={13} />
+            <span>Open Explorer</span>
+          </button>
         </div>
       );
     }
@@ -683,11 +691,185 @@ export default function Experience() {
               </div>
             </div>
 
+            {/* Mobile Sidebar Explorer Drawer */}
+            <AnimatePresence>
+              {isMobileExplorerOpen && (
+                <>
+                  {/* Backdrop overlay */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsMobileExplorerOpen(false)}
+                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+                  />
+                  {/* Drawer panel */}
+                  <motion.div
+                    initial={{ x: "-100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "-100%" }}
+                    transition={{ type: "spring", damping: 25, stiffness: 220 }}
+                    className="fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#141419] border-r border-card-border/40 p-4 flex flex-col text-xs font-mono shadow-2xl md:hidden"
+                  >
+                    <div className="pb-3 border-b border-card-border/30 text-[10px] font-bold tracking-wider text-zinc-500 flex items-center justify-between">
+                      <span>EXPLORER (MOBILE)</span>
+                      <button
+                        onClick={() => setIsMobileExplorerOpen(false)}
+                        className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-foreground cursor-pointer transition-colors"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+
+                    <div className="mt-4 flex-grow overflow-y-auto space-y-2 select-none">
+                      {/* Folder Item: Experience */}
+                      <div>
+                        <div 
+                          onClick={() => setIsExperienceOpen(!isExperienceOpen)}
+                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                        >
+                          {isExperienceOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                          {isExperienceOpen ? <FolderOpen size={14} className="text-blue-400" /> : <Folder size={14} className="text-blue-400" />}
+                          <span>experience</span>
+                        </div>
+                        
+                        {/* Experience Files */}
+                        <AnimatePresence initial={false}>
+                          {isExperienceOpen && (
+                            <motion.div
+                              variants={accordionVariants}
+                              initial="hidden"
+                              animate="visible"
+                              exit="hidden"
+                              className="pl-4 mt-0.5 space-y-0.5 overflow-hidden"
+                            >
+                              <button 
+                                onClick={() => {
+                                  openFile("teqfocus");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "teqfocus" 
+                                    ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <FileCode size={14} className="text-blue-400 flex-shrink-0" />
+                                <span className="truncate">TeqfocusSalesforce.ts</span>
+                              </button>
+
+                              <button 
+                                onClick={() => {
+                                  openFile("tatasteel");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "tatasteel" 
+                                    ? "bg-[#14b8a6]/10 border border-[#14b8a6]/20 text-[#14b8a6] font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <FileCode size={14} className="text-yellow-500 flex-shrink-0" />
+                                <span className="truncate">TataSteelML.py</span>
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      {/* Folder Item: Certifications */}
+                      <div>
+                        <div 
+                          onClick={() => setIsCertificationsOpen(!isCertificationsOpen)}
+                          className="flex items-center gap-1 text-zinc-400 font-semibold px-1 py-1 cursor-pointer hover:bg-zinc-800/40 rounded transition-colors"
+                        >
+                          {isCertificationsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                          {isCertificationsOpen ? <FolderOpen size={14} className="text-teal-400" /> : <Folder size={14} className="text-teal-400" />}
+                          <span>certifications</span>
+                        </div>
+
+                        {/* Certifications Files */}
+                        <AnimatePresence initial={false}>
+                          {isCertificationsOpen && (
+                            <motion.div
+                              variants={accordionVariants}
+                              initial="hidden"
+                              animate="visible"
+                              exit="hidden"
+                              className="pl-4 mt-0.5 space-y-0.5 overflow-hidden"
+                            >
+                              <button 
+                                onClick={() => {
+                                  openFile("salesforce_admin");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "salesforce_admin" 
+                                    ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <Award size={14} className="text-blue-400 flex-shrink-0" />
+                                <span className="truncate">Salesforce_Admin.cert</span>
+                              </button>
+
+                              <button 
+                                onClick={() => {
+                                  openFile("agentforce_specialist");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "agentforce_specialist" 
+                                    ? "bg-purple-500/10 border border-purple-500/20 text-purple-400 font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <Award size={14} className="text-purple-400 flex-shrink-0" />
+                                <span className="truncate">Agentforce_Specialist.cert</span>
+                              </button>
+
+                              <button 
+                                onClick={() => {
+                                  openFile("claude_certificate");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "claude_certificate" 
+                                    ? "bg-[#14b8a6]/10 border border-[#14b8a6]/20 text-[#14b8a6] font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <Award size={14} className="text-teal-400 flex-shrink-0" />
+                                <span className="truncate">Claude_Developer.cert</span>
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+
             {/* Editor Workspace Container (Tabs + Editor Code Space + Terminal) */}
             <div className="flex-grow flex flex-col overflow-hidden bg-[#0a0a0d]">
               
               {/* Tab headers */}
               <div className="h-9 bg-[#0e0e12] border-b border-card-border/30 flex items-center px-1 text-xs select-none overflow-x-auto scrollbar-none">
+                {/* Mobile Explorer Toggle */}
+                <button
+                  onClick={() => setIsMobileExplorerOpen(true)}
+                  className="flex md:hidden items-center justify-center p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40 rounded-md mr-1 cursor-pointer flex-shrink-0"
+                  title="Toggle Explorer"
+                >
+                  <FolderOpen size={14} className="text-blue-400" />
+                </button>
                 {openTabs.map((tabId) => {
                   const meta = tabsMeta[tabId];
                   const isActive = activeTab === tabId;
@@ -819,11 +1001,17 @@ export default function Experience() {
           <div className="h-6 bg-[#09090c] border-t border-card-border/40 px-3 flex items-center justify-between text-[10px] text-zinc-500 font-mono select-none">
             <div className="flex items-center gap-3">
               <button 
-                onClick={() => setIsExplorerOpen(!isExplorerOpen)}
-                className="hidden md:flex items-center gap-1 hover:text-zinc-300 cursor-pointer"
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setIsMobileExplorerOpen(true);
+                  } else {
+                    setIsExplorerOpen(!isExplorerOpen);
+                  }
+                }}
+                className="flex items-center gap-1 hover:text-zinc-300 cursor-pointer"
               >
                 <Settings size={10} />
-                <span>{isExplorerOpen ? "Hide Sidebar" : "Show Sidebar"}</span>
+                <span>Toggle Sidebar</span>
               </button>
               <span className="hidden sm:inline">|</span>
               <span className="hidden sm:inline text-zinc-600">Ln 1, Col 1</span>
