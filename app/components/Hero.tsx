@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ArrowRight, Sparkles, HeartPulse, Layers, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, HeartPulse, Layers, Zap, FileText, Download, Briefcase, FolderGit2, Award, Settings } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import ScrambleBackground from "./ScrambleBackground";
@@ -15,6 +15,7 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const [isProfileHovered, setIsProfileHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   // Monitor screen width to adjust slide animations for mobile compatibility
   useEffect(() => {
@@ -301,10 +302,11 @@ export default function Hero() {
               <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
-              onClick={handleScrollToContact}
-              className="flex items-center justify-center bg-card-bg hover:bg-muted-bg text-foreground border border-card-border font-bold px-6 py-3.5 rounded-xl text-sm transition-all cursor-pointer shadow-sm hover:border-foreground/20"
+              onClick={() => setIsResumeOpen(true)}
+              className="flex items-center justify-center gap-2 bg-card-bg hover:bg-muted-bg text-foreground border border-card-border font-bold px-6 py-3.5 rounded-xl text-sm transition-all cursor-pointer shadow-sm hover:border-foreground/20"
             >
-              Get in Touch
+              <FileText size={16} className="text-primary-sf dark:text-primary-ai" />
+              View Resume
             </button>
           </div>
         </div>
@@ -409,6 +411,64 @@ export default function Hero() {
         </div>
 
       </div>
+
+      {/* Resume Modal Overlay */}
+      <AnimatePresence>
+        {isResumeOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md"
+            onClick={() => setIsResumeOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.97, y: 15, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.97, y: 15, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 280, damping: 26 }}
+              data-lenis-prevent
+              className="max-w-4xl w-full bg-card-bg border border-card-border rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col h-[85vh] relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex justify-between items-center pb-4 border-b border-card-border/60 select-none mb-4">
+                <div>
+                  <span className="text-[10px] font-bold text-primary-sf dark:text-primary-ai uppercase tracking-wider bg-primary-sf/10 dark:bg-primary-ai/10 px-3 py-1 rounded-full">
+                    Resume Preview
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-extrabold mt-3 font-archivo">Sumit Kumar Gupta</h3>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/Sumit_Kumar_Gupta_Resume.pdf"
+                    download="Sumit_Kumar_Gupta_Resume.pdf"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-primary-sf to-primary-ai text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Download size={13} />
+                    <span>Download PDF</span>
+                  </a>
+                  <button
+                    onClick={() => setIsResumeOpen(false)}
+                    className="p-1 rounded-xl border border-card-border bg-muted-bg hover:bg-card-bg hover:scale-105 transition-all text-xs font-bold px-3 py-2 text-foreground cursor-pointer"
+                  >
+                    ✕ Close
+                  </button>
+                </div>
+              </div>
+
+              {/* Resume PDF document frame */}
+              <div className="flex-1 w-full overflow-hidden relative">
+                <iframe
+                  src="/Sumit_Kumar_Gupta_Resume.pdf#toolbar=0"
+                  className="w-full h-full rounded-2xl border border-card-border/40 bg-[#070709]"
+                  title="Sumit Kumar Gupta Resume"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

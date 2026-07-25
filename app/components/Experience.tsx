@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -65,7 +66,7 @@ const adminLogs = [
   "==========================================================================",
   "✔ Holder: Sumit Kr Gupta",
   "✔ Issuer: Salesforce.com, Inc.",
-  "✔ Verification Link: https://trailhead.salesforce.com/en/credentials/verification/",
+  "✔ Verification Link: https://www.salesforce.com/trailblazer/sumitgupta05",
   "=========================================================================="
 ];
 
@@ -77,7 +78,7 @@ const agentforceLogs = [
   "==========================================================================",
   "✔ Holder: Sumit Kr Gupta",
   "✔ Issuer: Salesforce.com, Inc.",
-  "✔ Verification Link: https://trailhead.salesforce.com/en/credentials/verification/",
+  "✔ Verification Link: https://www.salesforce.com/trailblazer/sumitgupta05",
   "=========================================================================="
 ];
 
@@ -330,7 +331,7 @@ export default function Experience() {
     );
   };
 
-  const renderCertificate = (title: string, id: string, date: string, issuer: string, description: string, badgeGlow: string) => {
+  const renderCertificate = (title: string, id: string, date: string, issuer: string, description: string, badgeGlow: string, verifyUrl?: string) => {
     return (
       <div className="font-mono text-zinc-300 p-6 rounded-xl border border-card-border/50 bg-[#0c0c10] space-y-5 max-w-xl mx-auto relative overflow-hidden select-text my-4 shadow-xl">
         {/* Glowing background accent */}
@@ -367,6 +368,60 @@ export default function Experience() {
             <span>{date}</span>
           </div>
         </div>
+
+        {/* Verification Link Button */}
+        {verifyUrl && (
+          <div className="pt-2 text-center select-none">
+            <a
+              href={verifyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 px-3 py-1.5 bg-muted-bg hover:bg-card-bg border border-card-border text-foreground hover:text-primary-sf dark:hover:text-primary-ai font-bold text-[10px] rounded-lg transition-colors cursor-pointer"
+            >
+              Verify Credential ↗
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderImageCertificate = (title: string, imageSrc: string, verifyUrl: string) => {
+    return (
+      <div className="border border-card-border/40 bg-[#0d0d11]/80 backdrop-blur-sm p-4 sm:p-5 rounded-2xl flex flex-col items-center gap-4 max-w-xl mx-auto shadow-2xl hover:border-primary-sf/30 transition-all select-none my-4">
+        {/* Certificate Display Screen */}
+        <div className="relative w-full aspect-[1.414/1] rounded-xl overflow-hidden border border-card-border/40 bg-[#070709] group shadow-inner">
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            sizes="(max-w-768px) 100vw, 500px"
+            className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            priority
+          />
+          {/* Subtle overlay sheen */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
+        </div>
+
+        {/* Action Controls */}
+        <div className="w-full flex items-center justify-between px-1">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-primary-sf dark:text-primary-ai uppercase tracking-wider">
+              Verified Credential
+            </span>
+            <span className="text-xs font-bold text-foreground truncate max-w-[200px] sm:max-w-none mt-0.5">
+              {title}
+            </span>
+          </div>
+          <a
+            href={verifyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-primary-sf to-primary-ai text-white font-bold text-[10px] rounded-xl shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+          >
+            Verify Credential ↗
+          </a>
+        </div>
       </div>
     );
   };
@@ -386,24 +441,18 @@ export default function Experience() {
     if (activeTab === "tatasteel") return renderTataSteelCode();
     
     if (activeTab === "salesforce_admin") {
-      return renderCertificate(
+      return renderImageCertificate(
         "Salesforce Certified Administrator",
-        "ADM-3984102",
-        "November 2024",
-        "Salesforce.com, Inc.",
-        "Demonstrates complete core administrative mastery: designing custom security/sharing policies, automations, objects, reports, and overall organization setups.",
-        "bg-blue-500"
+        "/Admin%20Certificate.png",
+        "https://www.salesforce.com/trailblazer/sumitgupta05"
       );
     }
     
     if (activeTab === "agentforce_specialist") {
-      return renderCertificate(
+      return renderImageCertificate(
         "Salesforce Certified Agentforce Specialist",
-        "AGT-4982130",
-        "June 2025",
-        "Salesforce.com, Inc.",
-        "Demonstrates advanced knowledge of autonomous Agentforce configurations, semantic routing, guardrail definitions, custom invocables, and external system integrations.",
-        "bg-purple-500"
+        "/Agentforce%20Specialist%20Certificate.png",
+        "https://www.salesforce.com/trailblazer/sumitgupta05"
       );
     }
     
@@ -414,7 +463,8 @@ export default function Experience() {
         "January 2025",
         "Anthropic PBC",
         "Demonstrates state-of-the-art proficiency in prompt engineering, context window structuring, advanced system directives, XML structuring, and automated tool integrations.",
-        "bg-teal-500"
+        "bg-teal-500",
+        "https://anthropic.skilljar.com/accounts/profile/"
       );
     }
 
