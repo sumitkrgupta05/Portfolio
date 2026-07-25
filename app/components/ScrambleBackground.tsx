@@ -58,9 +58,8 @@ export default function ScrambleBackground() {
     let delays = new Array(columns).fill(0).map(() => Math.random() * -360);
     let activeWords = new Array(columns).fill(0).map(() => wordsList[Math.floor(Math.random() * wordsList.length)]);
 
-    // Spacing stride between columns: wider gaps on mobile to prevent overcrowding and save CPU cycles
-    const isMobileViewport = window.innerWidth < 768;
-    const colStep = isMobileViewport ? 12 : 6;
+    // Spacing stride between columns to create wide gaps and prevent screen overcrowding
+    const colStep = 6; // minimum 96px horizontal gap (6 * 16px)
 
     const draw = () => {
       // Clear the canvas completely on every frame for 100% transparency
@@ -124,16 +123,8 @@ export default function ScrambleBackground() {
       }
     };
 
-    let frameTick = 0;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      
-      // On mobile screens, render every alternate frame (~30fps) to prevent CPU and battery drain
-      if (isMobileViewport) {
-        frameTick++;
-        if (frameTick % 2 !== 0) return;
-      }
-      
       draw();
     };
 
