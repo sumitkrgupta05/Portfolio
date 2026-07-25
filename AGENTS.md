@@ -73,7 +73,17 @@ pnpm lint        # Run ESLint
 ### Hero
 - Cycles titles every 3.5 seconds
 - GSAP entrance fade-in + Framer Motion stagger reveals
-- Pattern: Combine GSAP timeline with Framer Motion component animations
+- Includes a **"View Resume"** trigger launching an `AnimatePresence` modal overlay.
+- **Resume Modal Preview**: Renders the static PDF asset `/Sumit_Kumar_Gupta_Resume.pdf#toolbar=0` inside a full-height A4-ratio `iframe` (`max-w-4xl h-[85vh]`).
+- **Scroll Catching**: Outfitted with `data-lenis-prevent` to allow smooth native scroll wheel operations bypassing Lenis intercepts.
+
+### Experience
+- Interactive mock VS Code window showcasing professional history and digital credentials:
+  - **Collapsible File Tree**: Responsive accordion folders (`experience/`, `certifications/`) toggled via height animations.
+  - **Dynamic Workspace Tabs**: State-aware tab manager handling opening, active focus shifting, tab closing, and fallback empty states.
+  - **Responsive Image Certificate Card**: Renders real credential assets (`/Admin%20Certificate.png` and `/Agentforce%20Specialist%20Certificate.png`) inside a container that stacks into a full-width verify action on mobile screens, and displays inline on desktop.
+  - **Simulated Terminal Verifier**: Executes script lines simulating `openssl verify` certificate chain validations in real time.
+  - **Verification Anchors**: Connects credentials directly to Sumit's public Trailblazer verification profile: `https://www.salesforce.com/trailblazer/sumitgupta05`.
 
 ### Navbar
 - Sticky positioning with scroll detection
@@ -130,8 +140,8 @@ pnpm lint        # Run ESLint
 
 ### Responsive Design
 - Mobile-first approach with Tailwind breakpoints
+- **Mobile Side-Drawer**: Toggles an overlay drawer explorer tree on mobile devices (triggered from tab headers, empty editor panels, and status bars).
 - CursorFollower disabled on touch devices
-- Hamburger menu for mobile navigation via Navbar
 
 ---
 
@@ -157,6 +167,7 @@ pnpm lint        # Run ESLint
 - [package.json](package.json) — Dependencies and scripts
 - [tsconfig.json](tsconfig.json) — TypeScript config, path aliases
 - [design-system/sumit-portfolio/MASTER.md](design-system/sumit-portfolio/MASTER.md) — Design rules
+- [AGENTS.md](AGENTS.md) — AI agent design guidelines and conventions
 
 ---
 
@@ -166,6 +177,7 @@ pnpm lint        # Run ESLint
 - Canvas animations optimized for 60fps (check ScrambleBackground for requestAnimationFrame patterns)
 - LoadingScreen TextScramble class batches DOM updates
 - Lazy load heavy animations on mobile devices
+- Next.js Image components optimized with responsive `sizes` definitions.
 
 ---
 
@@ -188,3 +200,4 @@ pnpm lint        # Run ESLint
 3. Study [app/components/Hero.tsx](app/components/Hero.tsx) for GSAP + Framer Motion combination
 4. Check [globals.css](app/globals.css) for available CSS variables and theme colors
 5. Review [design-system/sumit-portfolio/MASTER.md](design-system/sumit-portfolio/MASTER.md) for design rules
+6. Reference [AGENTS.md](AGENTS.md) for current implementation patterns (PDF iframe Resume Previews, Experience mobile side-drawers, and interactive certificate verifiers).
