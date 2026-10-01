@@ -25,7 +25,7 @@ import {
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-type FileTab = "teqfocus" | "tatasteel" | "salesforce_admin" | "agentforce_specialist" | "claude_certificate";
+type FileTab = "teqfocus" | "tatasteel" | "salesforce_admin" | "salesforce_pd1" | "agentforce_specialist" | "claude_certificate";
 type TerminalState = "idle" | "running" | "completed";
 
 const teqfocusLogs = [
@@ -70,6 +70,18 @@ const adminLogs = [
   "=========================================================================="
 ];
 
+const pd1Logs = [
+  "sumit@developer-portfolio:~/certifications$ openssl verify Salesforce_PD1.cert",
+  "🔒 Connecting to Trailhead verification database...",
+  "📡 Matching Credential ID: 8066402",
+  "✔ [Status: VERIFIED] Salesforce Certified Platform Developer I",
+  "==========================================================================",
+  "✔ Holder: Sumit Gupta",
+  "✔ Issuer: Salesforce.com, Inc.",
+  "✔ Verification Link: https://www.salesforce.com/trailblazer/sumitgupta05",
+  "=========================================================================="
+];
+
 const agentforceLogs = [
   "sumit@developer-portfolio:~/certifications$ openssl verify Agentforce_Specialist.cert",
   "🔒 Connecting to Trailhead verification database...",
@@ -98,6 +110,7 @@ const logsMap: Record<FileTab, string[]> = {
   teqfocus: teqfocusLogs,
   tatasteel: tatasteelLogs,
   salesforce_admin: adminLogs,
+  salesforce_pd1: pd1Logs,
   agentforce_specialist: agentforceLogs,
   claude_certificate: claudeLogs
 };
@@ -106,6 +119,7 @@ const tabsMeta: Record<FileTab, { name: string; iconColor: string; type: "code" 
   teqfocus: { name: "TeqfocusSalesforce.ts", iconColor: "text-blue-400", type: "code" },
   tatasteel: { name: "TataSteelML.py", iconColor: "text-yellow-500", type: "code" },
   salesforce_admin: { name: "Salesforce_Admin.cert", iconColor: "text-teal-400", type: "cert" },
+  salesforce_pd1: { name: "Salesforce_PD1.cert", iconColor: "text-blue-500", type: "cert" },
   agentforce_specialist: { name: "Agentforce_Specialist.cert", iconColor: "text-purple-400", type: "cert" },
   claude_certificate: { name: "Claude_Developer.cert", iconColor: "text-red-400", type: "cert" }
 };
@@ -200,11 +214,10 @@ export default function Experience() {
     setVisibleLogLines([]);
   };
 
-  // Reset terminal when switching tabs to avoid log confusion
+  // Auto clear timers on unmount
   useEffect(() => {
-    resetTerminal();
     return () => clearTimer();
-  }, [activeTab]);
+  }, []);
 
   // Auto scroll terminal to bottom whenever new lines are added
   useEffect(() => {
@@ -214,6 +227,7 @@ export default function Experience() {
   }, [visibleLogLines]);
 
   const openFile = (tabId: FileTab) => {
+    resetTerminal();
     if (!openTabs.includes(tabId)) {
       setOpenTabs(prev => [...prev, tabId]);
     }
@@ -222,6 +236,7 @@ export default function Experience() {
 
   const closeFile = (e: React.MouseEvent, tabId: FileTab) => {
     e.stopPropagation();
+    resetTerminal();
     const nextTabs = openTabs.filter(t => t !== tabId);
     setOpenTabs(nextTabs);
     if (activeTab === tabId) {
@@ -464,6 +479,14 @@ export default function Experience() {
       );
     }
     
+    if (activeTab === "salesforce_pd1") {
+      return renderImageCertificate(
+        "Salesforce Certified Platform Developer I",
+        "/Platform%20Developer%201.png",
+        "https://www.salesforce.com/trailblazer/sumitgupta05"
+      );
+    }
+    
     if (activeTab === "agentforce_specialist") {
       return renderImageCertificate(
         "Salesforce Certified Agentforce Specialist",
@@ -578,7 +601,7 @@ export default function Experience() {
             >
               <div className="p-3 border-b border-card-border/30 text-[10px] font-bold tracking-wider text-zinc-500 flex items-center justify-between">
                 <span>EXPLORER</span>
-                <span className="w-4 h-4 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center text-[9px] font-bold">5</span>
+                <span className="w-4 h-4 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center text-[9px] font-bold">6</span>
               </div>
               
               <div className="p-2 space-y-2 overflow-y-auto">
@@ -665,6 +688,19 @@ export default function Experience() {
                         >
                           <Award size={14} className="text-blue-400 flex-shrink-0" />
                           <span className="truncate">Salesforce_Admin.cert</span>
+                        </button>
+
+                        <button 
+                          onClick={() => openFile("salesforce_pd1")}
+                          className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                            ${activeTab === "salesforce_pd1" 
+                              ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                              : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                            }
+                          `}
+                        >
+                          <Award size={14} className="text-blue-500 flex-shrink-0" />
+                          <span className="truncate">Salesforce_PD1.cert</span>
                         </button>
 
                         <button 
@@ -826,6 +862,22 @@ export default function Experience() {
 
                               <button 
                                 onClick={() => {
+                                  openFile("salesforce_pd1");
+                                  setIsMobileExplorerOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors cursor-pointer
+                                  ${activeTab === "salesforce_pd1" 
+                                    ? "bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] font-bold" 
+                                    : "text-zinc-400 hover:bg-zinc-800/40 hover:text-zinc-200"
+                                  }
+                                `}
+                              >
+                                <Award size={14} className="text-blue-500 flex-shrink-0" />
+                                <span className="truncate">Salesforce_PD1.cert</span>
+                              </button>
+
+                              <button 
+                                onClick={() => {
                                   openFile("agentforce_specialist");
                                   setIsMobileExplorerOpen(false);
                                 }}
@@ -888,7 +940,10 @@ export default function Experience() {
                   return (
                     <div
                       key={tabId}
-                      onClick={() => setActiveTab(tabId)}
+                      onClick={() => {
+                        resetTerminal();
+                        setActiveTab(tabId);
+                      }}
                       className={`h-full flex items-center gap-2 border-r border-card-border/20 px-3 text-left transition-colors cursor-pointer relative group
                         ${isActive
                           ? "bg-[#0a0a0d] border-b-2 border-b-[#3b82f6] text-[#3b82f6] font-bold"
